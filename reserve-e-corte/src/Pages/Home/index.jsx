@@ -9,6 +9,7 @@ import {
 } from "./styles";
 import {BsFillCalendar2EventFill} from "react-icons/bs";
 import {IoEllipsisVerticalSharp} from "react-icons/io5";
+import {AiOutlineCaretDown} from "react-icons/ai";
 
 
 const Schedules = () => {
@@ -58,7 +59,7 @@ const Schedules = () => {
             <header>
                 <IconsLeftSchedules>
                     {/* <div><Hamburger/></div> */}
-                    <h1>{day}</h1>
+                    <h1>{day} <AiOutlineCaretDown /></h1>
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>

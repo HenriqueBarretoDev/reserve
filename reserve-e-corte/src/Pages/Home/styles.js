@@ -36,15 +36,19 @@ export const IconsLeftSchedules = styled.div`
 
   h1 {
     font-size: 20px;
-  }
-
-  h1::first-letter {
-    text-transform: uppercase
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
   }
 
   svg {
-    min-height: 30px;
+    size: 30px;
     width: 100%;
+  }
+
+  :nth-child(1) svg {
+    size: 10px !important;
+    margin-top: 5px;
   }
 `;
 
