@@ -48,7 +48,7 @@ export const IconsLeftSchedules = styled.div`
 
   :nth-child(1) svg {
     size: 10px !important;
-    margin-top: 5px;
+    margin: 5px 0 0 2px;
   }
 `;
 
