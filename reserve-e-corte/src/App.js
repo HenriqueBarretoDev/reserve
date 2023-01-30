@@ -1,14 +1,13 @@
 import "./App.css";
 
 import Home from "./Pages/Home";
-import Hamburguer from "./Components/Hamburguer";
+import HamburguerIcon from "./Components/Hamburguer";
 function App() {
+  
   return (
     <div className="App">
-      <Hamburguer/>
+      {/* <HamburguerIcon/> */}
       <Home />
-    
-
     </div>
   );
 }

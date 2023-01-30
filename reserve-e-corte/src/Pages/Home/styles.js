@@ -1,25 +1,28 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
+export const TopDates = styled.div``;
 
-export const TopDates = styled.div`
-`;
-
-export const BottomDates = styled.div`
-`;
+export const BottomDates = styled.div``;
 
 export const ContainerSchedules = styled.div`
-
   header {
+    display: flex;
+    align-items: center;
     background-color: #f0eeed;
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
-    margin: 0;
+    margin-left: 0px;
+  }
+
+  div {
+    color: red;
   }
 
   h1 {
     color: #08152c;
     text-align: center;
+    padding-left: 30px;
   }
 `;
 
@@ -39,12 +42,13 @@ export const IconsLeftSchedules = styled.div`
   }
 
   h1::first-letter {
-    text-transform: uppercase
+    text-transform: uppercase;
   }
 
   svg {
     min-height: 30px;
-    width: 100%;
+    /* width: 100%; */
+    background-color: green;
   }
 `;
 
@@ -55,8 +59,9 @@ export const IconsRightSchedules = styled.div`
   svg {
     padding-left: 20px;
     min-height: 20px;
-    width: 100%;
+    /* width: 100%; */
     padding-right: 20px;
+    /* padding: 20px 20px 0 20px; */
   }
 `;
 
@@ -65,7 +70,6 @@ export const BoxTime = styled.div`
   max-width: 20%;
   padding: 0 10px;
   border: 1px solid black;
-
 
   p {
     padding: 4px;
@@ -96,10 +100,9 @@ export const Reservations = styled.div`
     //background-color: green;
     //padding: 5px;
   }
-
-`
+`;
 export const MainReservation = styled.div`
   width: 100%;
   display: flex;
   //background-color: #8ed7ec;
-`
+`;
