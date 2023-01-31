@@ -1,144 +1,109 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
-  ContainerSchedules,
-  IconsLeftSchedules,
-  IconsRightSchedules,
-  BoxTime,
-  Reservations,
-  MainReservation,
+    ContainerSchedules,
+    IconsLeftSchedules,
+    IconsRightSchedules,
+
 } from './styles';
-import { BsFillCalendar2EventFill } from 'react-icons/bs';
-import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { AiOutlineCaretDown } from 'react-icons/ai';
+
+import {BsFillCalendar2EventFill} from 'react-icons/bs';
+import {IoEllipsisVerticalSharp} from 'react-icons/io5';
+import {AiOutlineCaretDown} from 'react-icons/ai';
 import HamburguerMenu from '../../Components/Hamburguer';
+import CardReserve from "../../Components/CardReserve";
+import {useAuth} from "../../Hooks/useAuth";
+import moment from "moment";
+
 
 const Schedules = () => {
-  const [currentDay, setCurrentDay] = useState(new Date().getDay());
-  const [day, setDay] = useState(
-    new Date().toLocaleString('pt-BR', { weekday: 'long' }),
-  );
 
-  function updateCurrentDay() {
-    setCurrentDay(new Date().getDay());
-  }
+    const [hours, setHours] = useState(0);
 
-  useEffect(() => {
-    updateCurrentDay();
-  }, []);
+    useEffect(() => {
+        const currentTime = moment();
+        const totalHours = currentTime.hours();
+        setHours(totalHours);
+    }, []);
+////
 
-  const [date, setDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [time, setTime] = useState(new Date().toLocaleTimeString());
+    const totalDeHorasDia = 24
+    const [horaAtual, setHoraAtual] = useState(0)
+    const [horaDeTrabalho, setHoraDeTrabalho] = useState()
 
-  const today = new Date();
+    const calculaHoraEMostraCard = () => {
+        if (horaAtual >= 7 && horaAtual <= 19) {
+            return setHoraDeTrabalho(true)
+        }
+    }
+    const vaiTerCard = () => {
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date().toLocaleTimeString());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    }
+////
 
-  function renderCalendar() {
-    // render calendar
-  }
+    ///teste2 abaixo
+    const [workHours, setWorkHours] = useState([]);
 
-  function renderAvailableTimes() {
-    // render available times
-  }
+    useEffect(() => {
+        const start = 7;
+        const end = 20;
+        const hours = [];
 
-  function handleDateSelection(newDate) {
-    setDate(newDate);
-  }
+        for (let i = start; i < end; i++) {
+            hours.push(i);
+        }
 
-  function handleTimeSelection(newTime) {
-    setSelectedTime(newTime);
-  }
+        setWorkHours(hours);
+    }, []);
 
-  return (
-    <ContainerSchedules>
-      <header>
-        <IconsLeftSchedules>
-          <HamburguerMenu />
-          <h1>
-            {day} <AiOutlineCaretDown />
-          </h1>
-        </IconsLeftSchedules>
+    ///teste 2 acima
 
-        <IconsRightSchedules>
-          <div>
-            <BsFillCalendar2EventFill />
-          </div>
-          <div>
-            <IoEllipsisVerticalSharp />
-          </div>
-        </IconsRightSchedules>
-      </header>
-      <h1>Reserve seu horário</h1>
+    // const [date, setDate] = useState(moment().format("dddd, MMMM Do YYYY"));
+    const currentDate = moment().format('DD/MM/YYYY');
 
-      <MainReservation>
-        <BoxTime>
-          <p>08:00</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#acf232' }}>
-          <p>Horário disponível</p>
-        </Reservations>
-      </MainReservation>
+// pegar o dia atual
+//     const [today, setToday] = useState('');
+//     useEffect(() => {
+//         const currentDay = moment().locale('pt-br').format('dddd');
+//         setToday(currentDay);
+//     }, []);
 
-      <MainReservation>
-        <BoxTime>
-          <p>08:30</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#acf232' }}>
-          <p>Horário disponível</p>
-        </Reservations>
-      </MainReservation>
+    const getDayName = () => {
+        return moment().locale('pt-br').format('dddd');
+    };
+    const today = getDayName();
 
-      <MainReservation>
-        <BoxTime>
-          <p>09:00</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#e21c34' }}>
-          <p>Horário Ocupado</p>
-        </Reservations>
-      </MainReservation>
 
-      <MainReservation>
-        <BoxTime>
-          <p>09:30</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#e21c34' }}>
-          <p>Horário Ocupado</p>
-        </Reservations>
-      </MainReservation>
+    return (
+        <ContainerSchedules>
+            <header>
+                <IconsLeftSchedules>
+                    <HamburguerMenu/>
+                    <h1>{today}
+                        <AiOutlineCaretDown/>
+                    </h1>
+                </IconsLeftSchedules>
 
-      <MainReservation>
-        <BoxTime>
-          <p>10:00</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#acf232' }}>
-          <p>Horário disponível</p>
-        </Reservations>
-      </MainReservation>
+                <IconsRightSchedules>
+                    <div>
+                        <BsFillCalendar2EventFill/>
+                    </div>
+                    <div>
+                        <IoEllipsisVerticalSharp/>
+                    </div>
+                </IconsRightSchedules>
+            </header>
+            <h1>Reserve seu horário</h1>
+            <div>
+                {workHours.map(hour => (
+                    <div key={hour}>
+                        {/*<p>{hour}:00</p>*/}
+                        <CardReserve cardTimer={hour}/>
+                    </div>
+                ))}
+            </div>
+            {/*<CardReserve/>*/}
 
-      <MainReservation>
-        <BoxTime>
-          <p>10:30</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#acf232' }}>
-          <p>Horário disponível</p>
-        </Reservations>
-      </MainReservation>
-
-      <MainReservation>
-        <BoxTime>
-          <p>10:30</p>
-        </BoxTime>
-        <Reservations style={{ backgroundColor: '#e21c34' }}>
-          <p>Horário Ocupado</p>
-        </Reservations>
-      </MainReservation>
-    </ContainerSchedules>
-  );
+        </ContainerSchedules>
+    );
 };
 export default Schedules;
