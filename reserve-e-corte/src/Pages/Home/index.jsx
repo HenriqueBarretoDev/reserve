@@ -11,7 +11,6 @@ import { BsFillCalendar2EventFill } from 'react-icons/bs';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import HamburguerIcon from '../../Components/Hamburguer';
 
-
 const Schedules = () => {
   const [currentDay, setCurrentDay] = useState(new Date().getDay());
   const [day, setDay] = useState(
@@ -59,7 +58,7 @@ const Schedules = () => {
     <ContainerSchedules>
       <header>
         <div>
-        <HamburguerIcon />  
+          <HamburguerIcon />
         </div>
         <IconsLeftSchedules>
           <h1>{day}</h1>
