@@ -1,14 +1,10 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
+export const TopDates = styled.div``;
 
-export const TopDates = styled.div`
-`;
-
-export const BottomDates = styled.div`
-`;
+export const BottomDates = styled.div``;
 
 export const ContainerSchedules = styled.div`
-
   header {
     background-color: #f0eeed;
     display: flex;
@@ -70,7 +66,6 @@ export const BoxTime = styled.div`
   padding: 0 10px;
   border: 1px solid black;
 
-
   p {
     padding: 4px;
     background-color: #08152c;
@@ -100,10 +95,9 @@ export const Reservations = styled.div`
     //background-color: green;
     //padding: 5px;
   }
-
-`
+`;
 export const MainReservation = styled.div`
   width: 100%;
   display: flex;
   //background-color: #8ed7ec;
-`
+`;
