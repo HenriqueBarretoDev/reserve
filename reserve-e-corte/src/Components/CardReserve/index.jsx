@@ -17,28 +17,28 @@ const CardReserve = ({cardTimer}) => {
     const [error, setError] = useState('');
     const [showSpan, setShowSpan] = useState(false);
 
-    const handleChangeEvent = event => {
-        const phoneNumber = event.target.value;
-        if (/^\d+$/.test(phoneNumber)) {
-            setPhone(phoneNumber);
-            setError('');
-        } else {
-            setError('Por favor, insira apenas números.');
-        }
-    };
+    // const handleChangeEvent = event => {
+    //     const phoneNumber = event.target.value;
+    //     if (/^\d+$/.test(phoneNumber)) {
+    //         setPhone(phoneNumber);
+    //         setError('');
+    //     } else {
+    //         setError('Por favor, insira apenas números.');
+    //     }
+    // };
 
-    const handleChangePhone = event => {
-        let phoneNumber = event.target.value;
-
-        // Remove tudo o que não for número
-        phoneNumber = phoneNumber.replace(/\D/g, '');
-
-        // Adiciona parênteses ao redor dos dois primeiros dígitos
-        phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 10)}`;
-
-        setPhone(phoneNumber);
-        setError('');
-    };
+    // const handleChangePhone = event => {
+    //     let phoneNumber = event.target.value;
+    //
+    //     // Remove tudo o que não for número
+    //     phoneNumber = phoneNumber.replace(/\D/g, '');
+    //
+    //     // Adiciona parênteses ao redor dos dois primeiros dígitos
+    //     phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 11)}`;
+    //
+    //     setPhone(phoneNumber);
+    //     setError('');
+    // };
 
     const handleChangeNumberPhone = event => {
         let phoneNumber = event.target.value;
@@ -48,7 +48,7 @@ const CardReserve = ({cardTimer}) => {
 
         if (phoneNumber.length >= 10) {
             // Adiciona parênteses ao redor dos dois primeiros dígitos
-            phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 10)}`;
+            phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 11)}`;
             setError('');
         } else {
             setError('Número de telefone inválido');
@@ -74,6 +74,7 @@ const CardReserve = ({cardTimer}) => {
         }
     };
 
+
     function startWhatsappValidation() {
         setAvailableTime(false)
         setConfirmWithCode(true)
@@ -98,20 +99,33 @@ const CardReserve = ({cardTimer}) => {
                 <p>{cardTimer}</p>
             </BoxTime>
             <Reservations style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
-                {showSpan && (
-                    <>
-                        <span>Informe seu WhatsApp</span>
-                        <span>para validar seu agendamento</span>
+                {!showSpan && (<>
+                    <p>Horário disponível</p>
+                    <div>
+                        <input type="checkbox" checked={checked} onChange={handleChange}/>
+                        <label>Reservar Horário</label>
+                    </div>
+                </>)}
+
+                {!availableTime && !confirmWithCode && showSpan && (<>
+                    <span>Informe seu WhatsApp</span>
+                    <span>para validar seu agendamento</span>
+
+                    <div>
+                        <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
+                        <button onClick={startWhatsappValidation}>enviar</button>
+                    </div>
+                </>)}
+
+                {confirmWithCode && showSpan && (<div>
+                        <p>digite o código recebido no seu WhatsApp</p>
                         <div>
-                            <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
-                            <button onClick={startWhatsappValidation}>enviar</button>
+                            <input type="text" value={code} onChange={handleCodeChange}/>
+                            <button onClick={handleCodeValidation}>Validar</button>
+                            <p>{validationMessage}</p>
                         </div>
-                    </>
+                    </div>
                 )}
-                <div>
-                    <input type="checkbox" checked={checked} onChange={handleChange}/>
-                    <label>Reservar Horário</label>
-                </div>
             </Reservations>
         </MainReservation>
     );
