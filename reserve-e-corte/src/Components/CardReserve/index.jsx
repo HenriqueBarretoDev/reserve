@@ -16,30 +16,7 @@ const CardReserve = ({cardTimer}) => {
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [showSpan, setShowSpan] = useState(false);
-
-    // const handleChangeEvent = event => {
-    //     const phoneNumber = event.target.value;
-    //     if (/^\d+$/.test(phoneNumber)) {
-    //         setPhone(phoneNumber);
-    //         setError('');
-    //     } else {
-    //         setError('Por favor, insira apenas números.');
-    //     }
-    // };
-
-    // const handleChangePhone = event => {
-    //     let phoneNumber = event.target.value;
-    //
-    //     // Remove tudo o que não for número
-    //     phoneNumber = phoneNumber.replace(/\D/g, '');
-    //
-    //     // Adiciona parênteses ao redor dos dois primeiros dígitos
-    //     phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 11)}`;
-    //
-    //     setPhone(phoneNumber);
-    //     setError('');
-    // };
-
+    
     const handleChangeNumberPhone = event => {
         let phoneNumber = event.target.value;
 
