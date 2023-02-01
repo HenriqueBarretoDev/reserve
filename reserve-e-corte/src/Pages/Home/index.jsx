@@ -11,79 +11,51 @@ import {IoEllipsisVerticalSharp} from 'react-icons/io5';
 import {AiOutlineCaretDown} from 'react-icons/ai';
 import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
-import {useAuth} from "../../Hooks/useAuth";
-import moment from "moment";
 
 
 const Schedules = () => {
 
-    const [hours, setHours] = useState(0);
+    const [day, setDay] = useState(new Date().toLocaleString("pt-BR", {weekday: "long"}));
+    const [currentDay, setCurrentDay] = useState(new Date().getDay());
+    const today = new Date();
+
+    function updateCurrentDay() {
+        setCurrentDay(new Date().getDay());
+    }
+
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [currentDate, setCurrentDate] = useState(new Date());
 
     useEffect(() => {
-        const currentTime = moment();
-        const totalHours = currentTime.hours();
-        setHours(totalHours);
-    }, []);
-////
-
-    const totalDeHorasDia = 24
-    const [horaAtual, setHoraAtual] = useState(0)
-    const [horaDeTrabalho, setHoraDeTrabalho] = useState()
-
-    const calculaHoraEMostraCard = () => {
-        if (horaAtual >= 7 && horaAtual <= 19) {
-            return setHoraDeTrabalho(true)
-        }
-    }
-    const vaiTerCard = () => {
-
-    }
-////
-
-    ///teste2 abaixo
-    const [workHours, setWorkHours] = useState([]);
-
-    useEffect(() => {
-        const start = 7;
-        const end = 20;
-        const hours = [];
-
-        for (let i = start; i < end; i++) {
-            hours.push(i);
-        }
-
-        setWorkHours(hours);
+        const intervalId = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 1000);
+        return () => clearInterval(intervalId);
     }, []);
 
-    ///teste 2 acima
+    const startTime = 8;
+    const endTime = 18;
+    const interval = 25;
+    const availableTimes = [];
 
-    // const [date, setDate] = useState(moment().format("dddd, MMMM Do YYYY"));
-    const currentDate = moment().format('DD/MM/YYYY');
-
-// pegar o dia atual
-//     const [today, setToday] = useState('');
-//     useEffect(() => {
-//         const currentDay = moment().locale('pt-br').format('dddd');
-//         setToday(currentDay);
-//     }, []);
-
-    const getDayName = () => {
-        return moment().locale('pt-br').format('dddd');
-    };
-    const today = getDayName();
-
+    for (let i = startTime; i <= endTime; i++) {
+        for (let j = 0; j < 60; j += interval) {
+            availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
+        }
+    }
 
     return (
         <ContainerSchedules>
             <header>
                 <IconsLeftSchedules>
                     <HamburguerMenu/>
-                    <h1>{today}
+                    <h1>{day}
                         <AiOutlineCaretDown/>
                     </h1>
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>
+
                     <div>
                         <BsFillCalendar2EventFill/>
                     </div>
@@ -93,15 +65,20 @@ const Schedules = () => {
                 </IconsRightSchedules>
             </header>
             <h1>Reserve seu horário</h1>
+
             <div>
-                {workHours.map(hour => (
-                    <div key={hour}>
-                        {/*<p>{hour}:00</p>*/}
-                        <CardReserve cardTimer={hour}/>
-                    </div>
-                ))}
+                <p>
+                    Data atual: {currentDate.toLocaleDateString()}{" "}
+                    {currentTime.toLocaleTimeString()}
+                </p>
+                <div>
+                    {availableTimes.map((time) => (
+                        <div key={time}>
+                            <CardReserve cardTimer={time}/>
+                        </div>
+                    ))}
+                </div>
             </div>
-            {/*<CardReserve/>*/}
 
         </ContainerSchedules>
     );
