@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const MainReservation = styled.div`
   width: 100%;
   display: flex;
-  //background-color: #8ed7ec;
 `;
 
 export const BoxTime = styled.div`
@@ -11,6 +10,8 @@ export const BoxTime = styled.div`
   max-width: 20%;
   padding: 0 10px;
   border: 1px solid black;
+  display: flex;
+  align-items: center;
 
   p {
     padding: 4px;
@@ -33,12 +34,20 @@ export const Reservations = styled.div`
   width: 100%;
   justify-content: center;
   border: 1px solid black;
+  text-align: center;
 
-  p {
+  p , span {
     color: #08152c;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
-    //background-color: green;
-    //padding: 5px;
+  }
+  label {
+    font-size: 18px;
+    font-weight: bolder;
+  }
+  input{
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid black;
   }
 `;
