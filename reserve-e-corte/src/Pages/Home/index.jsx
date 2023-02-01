@@ -33,6 +33,8 @@ const Schedules = () => {
         return () => clearInterval(intervalId);
     }, []);
 
+    const [selectedTime, setSelectedTime] = useState(null);
+
     const startTime = 8;
     const endTime = 18;
     const interval = 25;
@@ -43,6 +45,10 @@ const Schedules = () => {
             availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
         }
     }
+
+    const handleSelectTime = (time) => {
+        setSelectedTime(time);
+    };
 
     return (
         <ContainerSchedules>
@@ -74,7 +80,11 @@ const Schedules = () => {
                 <div>
                     {availableTimes.map((time) => (
                         <div key={time}>
-                            <CardReserve cardTimer={time}/>
+                            <CardReserve
+                                cardTimer={time}
+                                isSelected={selectedTime === time}
+                                onClick={() => handleSelectTime(time)}
+                            />
                         </div>
                     ))}
                 </div>

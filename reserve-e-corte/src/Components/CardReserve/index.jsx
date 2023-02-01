@@ -15,6 +15,7 @@ const CardReserve = ({cardTimer}) => {
     const [hours, setHours] = useState(0);
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
+    const [showSpan, setShowSpan] = useState(false);
 
     const handleChangeEvent = event => {
         const phoneNumber = event.target.value;
@@ -64,6 +65,7 @@ const CardReserve = ({cardTimer}) => {
         return code.length === 6;
     };
 
+
     const handleCodeValidation = () => {
         if (validateCode(code)) {
             setValidationMessage('Código válido');
@@ -79,6 +81,7 @@ const CardReserve = ({cardTimer}) => {
 
     function handleChange(event) {
         setChecked(event.target.checked)
+        setShowSpan(event.target.checked);
         setAvailableTime(false)
     }
 
@@ -95,36 +98,22 @@ const CardReserve = ({cardTimer}) => {
                 <p>{cardTimer}</p>
             </BoxTime>
             <Reservations style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
-
-                {availableTime && (<>
-                    <p>Horário disponível</p>
-                    <div>
-                        <input type="checkbox" checked={checked} onChange={handleChange}/>
-                        <label>Reservar Horário</label>
-                    </div>
-                </>)}
-
-                {!availableTime && !confirmWithCode && (<>
-                    <span>Informe seu WhatsApp</span>
-                    <span>para validar seu agendamento</span>
-
-                    <div>
-                        <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
-                        <button onClick={startWhatsappValidation}>enviar</button>
-                    </div>
-                </>)}
-
-                {confirmWithCode && (<div>
-                        <p>digite o código recebido no seu WhatsApp</p>
+                {showSpan && (
+                    <>
+                        <span>Informe seu WhatsApp</span>
+                        <span>para validar seu agendamento</span>
                         <div>
-                            <input type="text" value={code} onChange={handleCodeChange}/>
-                            <button onClick={handleCodeValidation}>Validar</button>
-                            <p>{validationMessage}</p>
+                            <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
+                            <button onClick={startWhatsappValidation}>enviar</button>
                         </div>
-                    </div>
+                    </>
                 )}
+                <div>
+                    <input type="checkbox" checked={checked} onChange={handleChange}/>
+                    <label>Reservar Horário</label>
+                </div>
             </Reservations>
         </MainReservation>
-    )
-}
+    );
+};
 export default CardReserve
