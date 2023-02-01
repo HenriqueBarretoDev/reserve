@@ -2,7 +2,9 @@ import React, {useState, useEffect} from 'react'
 import {BoxTime, MainReservation, Reservations} from "./styles";
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
-// import { useController } from 'react-hook-form';
+import {TbMoodHappy} from "react-icons/tb"
+import {GiHairStrands} from "react-icons/gi"
+import {BsWhatsapp} from "react-icons/bs"
 
 const CardReserve = ({cardTimer}) => {
 
@@ -16,7 +18,10 @@ const CardReserve = ({cardTimer}) => {
     const [phone, setPhone] = useState('');
     const [error, setError] = useState('');
     const [showSpan, setShowSpan] = useState(false);
-    
+    const [reservedTime, setReservedTime] = useState(false);
+    const [notReservation, setNotReservation] = useState(true);
+    const [customerWithCompletedAppointment, setCustomerWithCompletedAppointment] = useState(false);
+
     const handleChangeNumberPhone = event => {
         let phoneNumber = event.target.value;
 
@@ -46,6 +51,10 @@ const CardReserve = ({cardTimer}) => {
     const handleCodeValidation = () => {
         if (validateCode(code)) {
             setValidationMessage('Código válido');
+            setReservedTime(true)
+            setShowSpan(false)
+            setConfirmWithCode(false)
+            setNotReservation(false)
         } else {
             setValidationMessage('Código inválido');
         }
@@ -76,32 +85,58 @@ const CardReserve = ({cardTimer}) => {
                 <p>{cardTimer}</p>
             </BoxTime>
             <Reservations style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
-                {!showSpan && (<>
-                    <p>Horário disponível</p>
-                    <div>
-                        <input type="checkbox" checked={checked} onChange={handleChange}/>
-                        <label>Reservar Horário</label>
-                    </div>
-                </>)}
-
-                {!availableTime && !confirmWithCode && showSpan && (<>
-                    <span>Informe seu WhatsApp</span>
-                    <span>para validar seu agendamento</span>
-
-                    <div>
-                        <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
-                        <button onClick={startWhatsappValidation}>enviar</button>
-                    </div>
-                </>)}
-
-                {confirmWithCode && showSpan && (<div>
-                        <p>digite o código recebido no seu WhatsApp</p>
+                {!showSpan && notReservation && (
+                    <>
+                        <p>Horário disponível</p>
                         <div>
+                            <input type="checkbox" checked={checked} onChange={handleChange}/>
+                            <label>Reservar Horário</label>
+                        </div>
+                    </>
+                )}
+
+                {!availableTime && !confirmWithCode && showSpan && (
+                    <>
+                        <span>Informe seu WhatsApp</span>
+                        <span>para validar seu agendamento</span>
+
+                        <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
+                            <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
+                            <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>enviar</button>
+                        </div>
+                    </>
+                )}
+
+                {confirmWithCode && showSpan && (
+                    <div>
+                        <p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>
+                        <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
                             <input type="text" value={code} onChange={handleCodeChange}/>
-                            <button onClick={handleCodeValidation}>Validar</button>
+                            <button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>
                             <p>{validationMessage}</p>
                         </div>
                     </div>
+                )}
+
+                {reservedTime && (
+                    <div>
+                        <p>Agendamento concluído com sucesso! <TbMoodHappy/></p>
+                        <div>
+                            <p>Agora é só aguardar tranquilamente.</p>
+                            <p>Você receberá uma mensagem um pouco antes para te lembrar.</p>
+                            <p>Ate breve...</p>
+                        </div>
+                    </div>
+                )}
+                {customerWithCompletedAppointment && (
+                    <>
+                        <p>Horário Reservado</p>
+                        <div>
+                            {/*<input type="checkbox" checked={checked} onChange={handleChange}/>*/}
+                            <label>Reservar Horário</label>
+                            <GiHairStrands/>
+                        </div>
+                    </>
                 )}
             </Reservations>
         </MainReservation>
