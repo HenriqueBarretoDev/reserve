@@ -11,7 +11,7 @@ import {IoEllipsisVerticalSharp} from 'react-icons/io5';
 import {AiOutlineCaretDown} from 'react-icons/ai';
 import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
-
+import MenuCalendar from "../../Components/Calendar";
 
 const Schedules = () => {
 
@@ -55,6 +55,7 @@ const Schedules = () => {
             <header>
                 <IconsLeftSchedules>
                     <HamburguerMenu/>
+                    <MenuCalendar/>
                     <h1>{day}
                         <AiOutlineCaretDown/>
                     </h1>
