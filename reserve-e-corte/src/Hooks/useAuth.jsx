@@ -8,6 +8,7 @@ export const AuthProvider = (props) => {
     const [availableTime, setAvailableTime] = useState(true)
     const [notAvailableTime, setNotAvailableTime] = useState(false)
     const [confirmWithCode, setConfirmWithCode] = useState(false)
+    const [time, setTime] = useState()
 
     return (
         <AuthContext.Provider value={{
@@ -16,7 +17,9 @@ export const AuthProvider = (props) => {
             confirmWithCode,
             setConfirmWithCode,
             setNotAvailableTime,
-            notAvailableTime
+            notAvailableTime,
+            setTime,
+            time,
         }}>
             {props.children}
         </AuthContext.Provider>

@@ -28,10 +28,7 @@ export const BoxTime = styled.div`
 
 export const Reservations = styled.div`
   display: flex;
-  align-items: center;
-  justify-items: center;
-  justify-self: center;
-  width: 100%;
+   width: 100%;
   justify-content: center;
   border: 1px solid black;
   text-align: center;
