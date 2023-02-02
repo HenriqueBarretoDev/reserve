@@ -6,7 +6,7 @@ const HamburguerMenu = () => {
 
   return (
     <HamburguerContent>
-      <Hamburger
+      <Hamburger size={20} distance="sm"
         onToggle={toggled => {
           if (toggled) {
             console.log('menu aberto');
