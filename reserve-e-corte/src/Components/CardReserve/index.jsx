@@ -22,6 +22,8 @@ const CardReserve = ({cardTimer}) => {
     const [notReservation, setNotReservation] = useState(true);
     const [customerWithCompletedAppointment, setCustomerWithCompletedAppointment] = useState(false);
 
+    const {time, setTime} = useAuth()
+
     const handleChangeNumberPhone = event => {
         let phoneNumber = event.target.value;
 
@@ -55,6 +57,7 @@ const CardReserve = ({cardTimer}) => {
             setShowSpan(false)
             setConfirmWithCode(false)
             setNotReservation(false)
+            setTime(10)
         } else {
             setValidationMessage('Código inválido');
         }
@@ -78,6 +81,23 @@ const CardReserve = ({cardTimer}) => {
         setHours(totalHours);
 
     }, []);
+
+    const timer = () => {
+        return setTimeout(() => {
+            const currentTime = time - 1;
+            setTime(currentTime);
+        }, 1000)
+    }
+
+    useEffect(() => {
+        const timeout = timer();
+
+        if (time === 0) {
+            clearTimeout(timeout);
+            setCustomerWithCompletedAppointment(true);
+            setReservedTime(false)
+        }
+    },[timer]);
 
     return (
         <MainReservation>
@@ -124,21 +144,28 @@ const CardReserve = ({cardTimer}) => {
                         <div>
                             <p>Agora é só aguardar tranquilamente.</p>
                             <p>Você receberá uma mensagem um pouco antes para te lembrar.</p>
-                            <p>Ate breve...</p>
+                            <p>Ate breve... {time}</p>
                         </div>
                     </div>
                 )}
-                {customerWithCompletedAppointment && (
-                    <>
-                        <p>Horário Reservado</p>
-                        <div>
-                            {/*<input type="checkbox" checked={checked} onChange={handleChange}/>*/}
-                            <label>Reservar Horário</label>
-                            <GiHairStrands/>
-                        </div>
-                    </>
-                )}
+
             </Reservations>
+
+            {customerWithCompletedAppointment && !notReservation && (
+                <Reservations style={{backgroundColor: '#f64549', minWidth: '100%'}}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: '85px'
+                    }}>
+                        <p>Horário Reservado</p>
+                        <GiHairStrands/>
+                    </div>
+
+                </Reservations>
+            )}
         </MainReservation>
     );
 };
