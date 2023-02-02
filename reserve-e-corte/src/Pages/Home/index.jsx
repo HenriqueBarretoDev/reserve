@@ -51,11 +51,11 @@ const Schedules = () => {
     };
 
     return (
-        <ContainerSchedules>
+        <ContainerSchedules><MenuCalendar/>
             <header>
                 <IconsLeftSchedules>
                     <HamburguerMenu/>
-                    <MenuCalendar/>
+
                     <h1>{day}
                         <AiOutlineCaretDown/>
                     </h1>
