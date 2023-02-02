@@ -38,8 +38,11 @@ const MenuCalendar = () => {
     return (
         <CalendarContent>
             <MainCalendar>
-                <Calendar onChange={setDate} value={date} />
-                <div>{`${date.toLocaleDateString()} ${currentTime.toLocaleTimeString()}`}</div>
+                <Calendar
+                    next2Label={null}
+                    prev2Label={null}
+                    calendarType="US" onChange={setDate} value={date}/>
+                <div>{`${date.toLocaleDateString()}`}</div>
                 <form onSubmit={(event) => {
                     event.preventDefault();
                     addReservation(event.target.time.value);

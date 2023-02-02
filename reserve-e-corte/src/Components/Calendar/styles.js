@@ -6,18 +6,24 @@ export const CalendarContent = styled.div`
   justify-content: center;
   height: 100vh;
 
-  span {
-    background-color: red;
-    color: blue;
-
+  .react-calendar__navigation__label {
+    pointer-events: none;
   }
-}
-`
-
+  .react-calendar__month-view__days__day {
+    height: 60px;
+    width: 50px;
+  }
+  
+  
+  input {
+    background-color: rebeccapurple;
+    color: red;
+  }
+}`;
 export const MainCalendar = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 10px 10px 100px 10px;
   background-color: wheat;
 
 
