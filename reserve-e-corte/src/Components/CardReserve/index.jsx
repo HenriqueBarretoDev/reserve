@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {BoxTime, MainReservation, Reservations} from "./styles";
+import {BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./styles";
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
 import {TbMoodHappy} from "react-icons/tb"
-import {GiHairStrands} from "react-icons/gi"
 import {BsWhatsapp} from "react-icons/bs"
+import {AiOutlineUser} from "react-icons/ai"
+import {SlClose} from "react-icons/sl";
 
 const CardReserve = ({cardTimer}) => {
 
@@ -25,25 +26,12 @@ const CardReserve = ({cardTimer}) => {
     const {time, setTime} = useAuth(10)
 
     const handleChangeNumberPhone = event => {
-        let phoneNumber = event.target.value;
-
-        // Remove tudo o que não for número
-        phoneNumber = phoneNumber.replace(/\D/g, '');
-
-        if (phoneNumber.length >= 10) {
-            // Adiciona parênteses ao redor dos dois primeiros dígitos
-            phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 11)}`;
-
-            // Verifica se o número de telefone é válido
-            if (validatePhoneNumber(phoneNumber)) {
-                setError('');
-                setPhone(phoneNumber);
-            } else {
-                setError('Número de telefone inválido');
-            }
-        } else {
-            setError('Número de telefone inválido');
-        }
+        const value = event.target.value;
+        const newValue = value
+            .replace(/\D/g, "")
+            .slice(0, 11)
+            .replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+        setPhone(newValue);
     };
 
 
@@ -121,11 +109,35 @@ const CardReserve = ({cardTimer}) => {
                 )}
 
                 {!availableTime && !confirmWithCode && showSpan && (
-                    <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
-                        <span>Informe seu WhatsApp</span>
-                        <span>para validar seu agendamento</span>
-                        <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
-                        <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>enviar</button>
+                    <div style={{display: 'flex', flexDirection: 'column', padding: '20px 10px'}}>
+                        <span>Informe seu Nome e WhatsApp</span>
+                        <span>para reservar seu agendamento.</span>
+
+                        <div style={{display: 'flex', alignItems: 'center', padding: '20px'}}>
+                            <AiOutlineUser style={{display: 'flex', padding: '10px 8px 0 0'}}/>
+                            <InputMenu>
+                                <input required="required" type="text" pattern="[A-Za-z]{3,}" inputMode="latin-name"/>
+                                <span>Nome</span>
+                                <i/>
+                            </InputMenu>
+                        </div>
+
+                        <div style={{display: 'flex', alignItems: 'center', padding: '20px'}}>
+                            <BsWhatsapp style={{display: 'flex', padding: '10px 8px 0 0'}}/>
+                            <InputMenu>
+                                <input required="required" type="tel" pattern="[0-9]+" inputMode="numeric"
+                                       onChange={handleChangeNumberPhone}
+                                       value={phone}
+                                />
+                                <span>Whatsapp</span>
+                                <i/>
+                            </InputMenu>
+                        </div>
+
+                        <ButtonSend>
+                            <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>ENVIAR</button>
+                        </ButtonSend>
+
                     </div>
                 )}
 
@@ -163,7 +175,7 @@ const CardReserve = ({cardTimer}) => {
                         marginRight: '85px'
                     }}>
                         <p>Horário Reservado</p>
-                        <GiHairStrands/>
+                        <SlClose/>
                     </div>
 
                 </Reservations>
