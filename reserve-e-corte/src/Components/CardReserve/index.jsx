@@ -22,7 +22,7 @@ const CardReserve = ({cardTimer}) => {
     const [notReservation, setNotReservation] = useState(true);
     const [customerWithCompletedAppointment, setCustomerWithCompletedAppointment] = useState(false);
 
-    const {time, setTime} = useAuth()
+    const {time, setTime} = useAuth(10)
 
     const handleChangeNumberPhone = event => {
         let phoneNumber = event.target.value;
@@ -33,13 +33,19 @@ const CardReserve = ({cardTimer}) => {
         if (phoneNumber.length >= 10) {
             // Adiciona parênteses ao redor dos dois primeiros dígitos
             phoneNumber = `(${phoneNumber.substring(0, 2)}) ${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6, 11)}`;
-            setError('');
+
+            // Verifica se o número de telefone é válido
+            if (validatePhoneNumber(phoneNumber)) {
+                setError('');
+                setPhone(phoneNumber);
+            } else {
+                setError('Número de telefone inválido');
+            }
         } else {
             setError('Número de telefone inválido');
         }
-
-        setPhone(phoneNumber);
     };
+
 
     const handleCodeChange = (event) => {
         setCode(event.target.value);
@@ -57,12 +63,17 @@ const CardReserve = ({cardTimer}) => {
             setShowSpan(false)
             setConfirmWithCode(false)
             setNotReservation(false)
-            setTime(10)
+            setCustomerWithCompletedAppointment(false)
+            setTime(8)
         } else {
             setValidationMessage('Código inválido');
         }
     };
 
+    function validatePhoneNumber(phoneNumber) {
+        const regex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+        return regex.test(phoneNumber);
+    }
 
     function startWhatsappValidation() {
         setAvailableTime(false)
@@ -82,22 +93,18 @@ const CardReserve = ({cardTimer}) => {
 
     }, []);
 
-    const timer = () => {
-        return setTimeout(() => {
-            const currentTime = time - 1;
-            setTime(currentTime);
-        }, 1000)
-    }
-
     useEffect(() => {
-        const timeout = timer();
-
-        if (time === 0) {
-            clearTimeout(timeout);
-            setCustomerWithCompletedAppointment(true);
-            setReservedTime(false)
-        }
-    },[timer]);
+        const timer = setTimeout(() => {
+            if (time === 0) {
+                setReservedTime(false)
+                setCustomerWithCompletedAppointment(true)
+                clearTimeout(timer);
+            } else {
+                setTime(time - 1);
+            }
+        }, 1000);
+        return () => clearTimeout(timer);
+    }, [time]);
 
     return (
         <MainReservation>
@@ -106,25 +113,20 @@ const CardReserve = ({cardTimer}) => {
             </BoxTime>
             <Reservations style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
                 {!showSpan && notReservation && (
-                    <>
+                    <div>
                         <p>Horário disponível</p>
-                        <div>
-                            <input type="checkbox" checked={checked} onChange={handleChange}/>
-                            <label>Reservar Horário</label>
-                        </div>
-                    </>
+                        <input type="checkbox" checked={checked} onChange={handleChange}/>
+                        <label>Reservar Horário</label>
+                    </div>
                 )}
 
                 {!availableTime && !confirmWithCode && showSpan && (
-                    <>
+                    <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
                         <span>Informe seu WhatsApp</span>
                         <span>para validar seu agendamento</span>
-
-                        <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
-                            <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
-                            <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>enviar</button>
-                        </div>
-                    </>
+                        <input type="tel" value={phone} onChange={handleChangeNumberPhone}/>
+                        <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>enviar</button>
+                    </div>
                 )}
 
                 {confirmWithCode && showSpan && (

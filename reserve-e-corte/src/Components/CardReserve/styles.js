@@ -28,21 +28,25 @@ export const BoxTime = styled.div`
 
 export const Reservations = styled.div`
   display: flex;
-   width: 100%;
+  width: 100%;
   justify-content: center;
+  align-items: center;
   border: 1px solid black;
   text-align: center;
+  padding: 5px 0;
 
-  p , span {
+  p, span {
     color: #08152c;
     font-size: 22px;
     font-weight: bold;
   }
+
   label {
     font-size: 18px;
     font-weight: bolder;
   }
-  input{
+
+  input {
     padding: 5px 10px;
     border-radius: 10px;
     border: 1px solid black;
