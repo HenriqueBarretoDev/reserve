@@ -1,11 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import Calendar from 'react-calendar';
-import {CalendarContent, MainCalendar, TimeSelect, ReserveButton, ReservationList, ReservationItem} from './styles';
+import 'react-calendar/dist/Calendar.css';
+
+import {
+    CalendarContent,
+    MainCalendar,
+    TimeSelect,
+    ReserveButton,
+    ReservationList,
+    ReservationItem,
+    MessageCalendar
+} from './styles';
 
 const MenuCalendar = () => {
     const [date, setDate] = useState(new Date());
     const [currentTime, setCurrentTime] = useState(new Date());
     const [reservations, setReservations] = useState([]);
+    const [today, setToday] = useState(new Date());
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -13,6 +25,7 @@ const MenuCalendar = () => {
         }, 1000);
         return () => clearInterval(intervalId);
     }, []);
+
 
     const startTime = 8;
     const endTime = 18;
@@ -26,23 +39,40 @@ const MenuCalendar = () => {
     }
 
     const addReservation = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(date);
+        const selectedTime = time.split(':');
+        selectedDate.setHours(selectedTime[0], selectedTime[1]);
+
+        if (selectedDate < currentDate) {
+            setMessage("Esse horário já passou.");
+            return;
+        }
+
         const existingReservation = reservations.find(reservation => reservation.time === time && reservation.date.toLocaleDateString() === date.toLocaleDateString());
 
         if (!existingReservation) {
             setReservations([...reservations, {date, time}]);
+            setMessage("Reserva feita com sucesso.");
         } else {
-            alert("Esse horário já está reservado.");
+            setMessage("Esse horário já está reservado.");
         }
     };
 
     return (
         <CalendarContent>
             <MainCalendar>
-                <Calendar
-                    next2Label={null}
-                    prev2Label={null}
-                    calendarType="US" onChange={setDate} value={date}/>
-                <div>{`${date.toLocaleDateString()}`}</div>
+                <Calendar tileClassName={({
+                                              date,
+                                              view
+                                          }) => date.toLocaleDateString() === today.toLocaleDateString() ? "today" : ""}
+                          minDate={new Date()}
+                          next2Label={null}
+                          prev2Label={null}
+                          calendarType="US"
+                          onChange={setDate}
+                          value={date}
+                />
                 <form onSubmit={(event) => {
                     event.preventDefault();
                     addReservation(event.target.time.value);
@@ -56,6 +86,7 @@ const MenuCalendar = () => {
                     </TimeSelect>
                     <ReserveButton type="submit">Reservar</ReserveButton>
                 </form>
+                {message !== '' && <MessageCalendar>{message}</MessageCalendar>}
                 <ReservationList>
                     {reservations.map((reservation) => (
                         <ReservationItem key={reservation.time}>
