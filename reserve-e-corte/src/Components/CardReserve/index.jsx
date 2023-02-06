@@ -3,9 +3,10 @@ import {BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./s
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
 import {TbMoodHappy} from "react-icons/tb"
-import {BsWhatsapp} from "react-icons/bs"
-import {AiOutlineUser} from "react-icons/ai"
-import {SlClose} from "react-icons/sl";
+import {BsCheckCircle, BsWhatsapp} from "react-icons/bs"
+import {AiOutlineArrowRight, AiOutlineUser} from "react-icons/ai"
+import {SlClose, SlLock} from "react-icons/sl";
+import ButtonSendWhatsApp from "../ButtonSendWhatsApp";
 
 const CardReserve = ({cardTimer}) => {
 
@@ -101,10 +102,12 @@ const CardReserve = ({cardTimer}) => {
             </BoxTime>
             <Reservations style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
                 {!showSpan && notReservation && (
-                    <div>
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
                         <p>Horário disponível</p>
-                        <input type="checkbox" checked={checked} onChange={handleChange}/>
-                        <label>Reservar Horário</label>
+                        <div style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                        <input type="checkbox" checked={checked} onChange={handleChange} style={{width:'40px',height:'25px'}}/>
+                        <label style={{position:'relative',bottom:'6px',right:'4px'}}>Reservar Horário</label>
+                        </div>
                     </div>
                 )}
 
@@ -134,27 +137,40 @@ const CardReserve = ({cardTimer}) => {
                             </InputMenu>
                         </div>
 
-                        <ButtonSend>
-                            <button onClick={startWhatsappValidation} style={{marginTop: '10px'}}>ENVIAR</button>
+                        <ButtonSend onClick={startWhatsappValidation} style={{marginTop: '10px'}}>
+                            Enviar
+                            <div>
+                                <AiOutlineArrowRight/>
+                            </div>
                         </ButtonSend>
+
 
                     </div>
                 )}
 
                 {confirmWithCode && showSpan && (
-                    <div>
+                    <div style={{padding: '20px 10px'}}>
                         <p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>
                         <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
                             <input type="text" value={code} onChange={handleCodeChange}/>
-                            <button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>
-                            <p>{validationMessage}</p>
+                            {/*<button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>*/}
+                            {/*<p>{validationMessage}</p>*/}
                         </div>
+                        <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
+
+                            Validar
+                            <div>
+                                <AiOutlineArrowRight/>
+                            </div>
+                        </ButtonSend>
+                        <p>{validationMessage}</p>
                     </div>
                 )}
 
                 {reservedTime && (
                     <div>
-                        <p>Agendamento concluído com sucesso! <TbMoodHappy/></p>
+                        <p>Agendamento concluído com sucesso! </p>
+                        <BsCheckCircle style={{minHeight: '40px', width: '40px'}}/>
                         <div>
                             <p>Agora é só aguardar tranquilamente.</p>
                             <p>Você receberá uma mensagem um pouco antes para te lembrar.</p>
@@ -175,7 +191,7 @@ const CardReserve = ({cardTimer}) => {
                         marginRight: '85px'
                     }}>
                         <p>Horário Reservado</p>
-                        <SlClose/>
+                        <SlLock style={{width:'40px', height:'40px'}}/>
                     </div>
 
                 </Reservations>
