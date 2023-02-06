@@ -49,6 +49,11 @@ export const IconsLeftSchedules = styled.div`
 `;
 
 export const IconsRightSchedules = styled.div`
+  background-color: #f0eeed;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  margin: 0;
   display: flex;
   align-items: center;
 
