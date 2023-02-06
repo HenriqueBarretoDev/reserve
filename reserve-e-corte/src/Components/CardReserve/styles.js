@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const MainReservation = styled.div`
   width: 100%;
   display: flex;
+  overflow:hidden;
+  max-width: 100vw;
 `;
 
 export const BoxTime = styled.div`
@@ -26,7 +28,7 @@ export const BoxTime = styled.div`
   }
 `;
 
-export const Reservations = styled.div`
+export const Reservations = styled.form`
 
   display: flex;
   width: 100%;
