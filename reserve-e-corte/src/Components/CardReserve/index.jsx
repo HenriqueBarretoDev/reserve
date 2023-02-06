@@ -2,10 +2,18 @@ import React, {useState, useEffect} from 'react'
 import {BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./styles";
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
+
+import {TbMoodHappy} from "react-icons/tb"
+import {BsCheckCircle, BsWhatsapp} from "react-icons/bs"
+import {AiOutlineArrowRight, AiOutlineUser} from "react-icons/ai"
+import {SlClose, SlLock} from "react-icons/sl";
+import ButtonSendWhatsApp from "../ButtonSendWhatsApp";
+
 import {BsWhatsapp, BsCheckCircle} from "react-icons/bs"
 import {AiOutlineUser, AiOutlineArrowRight} from "react-icons/ai"
 import {GiPadlock} from "react-icons/gi";
 import ButtonSendRegister from '../../Components/ButtonSendRegister'
+
 
 const CardReserve = ({cardTimer}) => {
 
@@ -124,6 +132,14 @@ const CardReserve = ({cardTimer}) => {
                 onSubmit={handleSubmitNamePhone}
                 style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
                 {!showSpan && notReservation && (
+
+                    <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+                        <p>Horário disponível</p>
+                        <div style={{flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                        <input type="checkbox" checked={checked} onChange={handleChange} style={{width:'40px',height:'25px'}}/>
+                        <label style={{position:'relative',bottom:'6px',right:'4px'}}>Reservar Horário</label>
+                        </div>
+
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -140,6 +156,7 @@ const CardReserve = ({cardTimer}) => {
                                    }}/>
                             <label>Reservar Horário</label>
                         </span>
+
                     </div>
                 )}
 
@@ -179,18 +196,41 @@ const CardReserve = ({cardTimer}) => {
                             </InputMenu>
                         </div>
 
+
+                        <ButtonSend onClick={startWhatsappValidation} style={{marginTop: '10px'}}>
+                            Enviar
+                            <div>
+                                <AiOutlineArrowRight/>
+                            </div>
+                        </ButtonSend>
+
+
+
                         <ButtonSendRegister onClick={startWhatsappValidation}/>
+
                     </div>
                 )}
 
                 {confirmWithCode && showSpan && (
+
+                    <div style={{padding: '20px 10px'}}>
+
                     <div style={{padding: '0 10px'}}>
+
                         <p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>
                         <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
                             <input type="text" value={code} onChange={handleCodeChange}/>
-                            <button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>
-                            <p>{validationMessage}</p>
+                            {/*<button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>*/}
+                            {/*<p>{validationMessage}</p>*/}
                         </div>
+                        <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
+
+                            Validar
+                            <div>
+                                <AiOutlineArrowRight/>
+                            </div>
+                        </ButtonSend>
+                        <p>{validationMessage}</p>
                     </div>
                 )}
 
@@ -217,7 +257,11 @@ const CardReserve = ({cardTimer}) => {
                         marginRight: '85px'
                     }}>
                         <p>Horário Reservado</p>
+
+                        <SlLock style={{width:'40px', height:'40px'}}/>
+
                         <GiPadlock style={{minHeight: '40px', width: '40px'}}/>
+
                     </div>
 
                 </Reservations>
