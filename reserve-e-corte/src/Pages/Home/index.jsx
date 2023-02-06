@@ -19,6 +19,8 @@ const Schedules = () => {
     const [currentDay, setCurrentDay] = useState(new Date().getDay());
     const today = new Date();
 
+    const [showCalendar, setShowCalendar] = useState(false);
+
     function updateCurrentDay() {
         setCurrentDay(new Date().getDay());
     }
@@ -51,10 +53,11 @@ const Schedules = () => {
     };
 
     return (
-        <ContainerSchedules><MenuCalendar/>
+        <ContainerSchedules>
             <header>
                 <IconsLeftSchedules>
                     <HamburguerMenu/>
+
 
                     <h1>{day}
                         <AiOutlineCaretDown/>
@@ -62,15 +65,16 @@ const Schedules = () => {
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>
-
                     <div>
-                        <BsFillCalendar2EventFill/>
+                        <BsFillCalendar2EventFill onClick={() => setShowCalendar(true)}/>
                     </div>
                     <div>
                         <IoEllipsisVerticalSharp/>
                     </div>
                 </IconsRightSchedules>
             </header>
+            <div>{showCalendar &&
+                <MenuCalendar/>}</div>
             <h1>Reserve seu horário</h1>
 
             <div>

@@ -15,7 +15,7 @@ import {
 const MenuCalendar = () => {
     const [date, setDate] = useState(new Date());
     const [currentTime, setCurrentTime] = useState(new Date());
-    const [reservations, setReservations] = useState([]);
+    // const [reservations, setReservations] = useState([]);
     const [today, setToday] = useState(new Date());
     const [message, setMessage] = useState('');
 
@@ -38,26 +38,26 @@ const MenuCalendar = () => {
         }
     }
 
-    const addReservation = (time) => {
-        const currentDate = new Date();
-        const selectedDate = new Date(date);
-        const selectedTime = time.split(':');
-        selectedDate.setHours(selectedTime[0], selectedTime[1]);
-
-        if (selectedDate < currentDate) {
-            setMessage("Esse horário já passou.");
-            return;
-        }
-
-        const existingReservation = reservations.find(reservation => reservation.time === time && reservation.date.toLocaleDateString() === date.toLocaleDateString());
-
-        if (!existingReservation) {
-            setReservations([...reservations, {date, time}]);
-            setMessage("Reserva feita com sucesso.");
-        } else {
-            setMessage("Esse horário já está reservado.");
-        }
-    };
+    // const addReservation = (time) => {
+    //     const currentDate = new Date();
+    //     const selectedDate = new Date(date);
+    //     const selectedTime = time.split(':');
+    //     selectedDate.setHours(selectedTime[0], selectedTime[1]);
+    //
+    //     if (selectedDate < currentDate) {
+    //         setMessage("Esse horário já passou.");
+    //         return;
+    //     }
+    //
+    //     const existingReservation = reservations.find(reservation => reservation.time === time && reservation.date.toLocaleDateString() === date.toLocaleDateString());
+    //
+    //     if (!existingReservation) {
+    //         setReservations([...reservations, {date, time}]);
+    //         setMessage("Reserva feita com sucesso.");
+    //     } else {
+    //         setMessage("Esse horário já está reservado.");
+    //     }
+    // };
 
     return (
         <CalendarContent>
@@ -73,27 +73,27 @@ const MenuCalendar = () => {
                           onChange={setDate}
                           value={date}
                 />
-                <form onSubmit={(event) => {
-                    event.preventDefault();
-                    addReservation(event.target.time.value);
-                }}>
-                    <TimeSelect name="time">
-                        {availableTimes.map((time) => (
-                            <option key={time} value={time}>
-                                {time}
-                            </option>
-                        ))}
-                    </TimeSelect>
-                    <ReserveButton type="submit">Reservar</ReserveButton>
-                </form>
-                {message !== '' && <MessageCalendar>{message}</MessageCalendar>}
-                <ReservationList>
-                    {reservations.map((reservation) => (
-                        <ReservationItem key={reservation.time}>
-                            {`${reservation.date.toLocaleDateString()} ${reservation.time}`}
-                        </ReservationItem>
-                    ))}
-                </ReservationList>
+                {/*<form onSubmit={(event) => {*/}
+                {/*    event.preventDefault();*/}
+                {/*    addReservation(event.target.time.value);*/}
+                {/*}}>*/}
+                {/*    <TimeSelect>*/}
+                {/*        {availableTimes.map((time) => (*/}
+                {/*            <option key={time} value={time}>*/}
+                {/*                {time}*/}
+                {/*            </option>*/}
+                {/*        ))}*/}
+                {/*    </TimeSelect>*/}
+                {/*    <ReserveButton type="submit">Reservar</ReserveButton>*/}
+                {/*</form>*/}
+                {/*{message !== '' && <MessageCalendar>{message}</MessageCalendar>}*/}
+                {/*<ReservationList>*/}
+                {/*    {reservations.map((reservation) => (*/}
+                {/*        <ReservationItem key={reservation.time}>*/}
+                {/*            {`${reservation.date.toLocaleDateString()} ${reservation.time}`}*/}
+                {/*        </ReservationItem>*/}
+                {/*    ))}*/}
+                {/*</ReservationList>*/}
             </MainCalendar>
         </CalendarContent>
     );
