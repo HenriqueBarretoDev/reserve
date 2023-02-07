@@ -1,17 +1,11 @@
 import React, {useState, useEffect} from 'react'
+
 import {BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./styles";
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
-
-// import {BsCheckCircle, BsWhatsapp} from "react-icons/bs"
-// import {AiOutlineArrowRight, AiOutlineUser} from "react-icons/ai"
-import {SlClose, SlLock} from "react-icons/sl";
-import ButtonSendWhatsApp from "../ButtonSendWhatsApp";
-
+import {SlLock} from "react-icons/sl";
 import {BsWhatsapp, BsCheckCircle} from "react-icons/bs"
 import {AiOutlineUser, AiOutlineArrowRight} from "react-icons/ai"
-import {GiPadlock} from "react-icons/gi";
-import ButtonSendRegister from '../../Components/ButtonSendRegister'
 
 
 const CardReserve = ({cardTimer}) => {
@@ -132,7 +126,7 @@ const CardReserve = ({cardTimer}) => {
                 style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
                 {!showSpan && notReservation && (
 
-                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:'20px'}}>
                         <p>Horário Disponível</p>
                         <div style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             <input type="checkbox" checked={checked} onChange={handleChange}
@@ -143,7 +137,7 @@ const CardReserve = ({cardTimer}) => {
                                        top: '4px',
                                        right: '2px'
                                    }}/>
-                            <label style={{position: 'relative', bottom: '6px', right: '4px'}}>Reservar Horário</label>
+                            <label>Reservar Horário</label>
                         </div>
                     </div>
                 )}
@@ -189,7 +183,6 @@ const CardReserve = ({cardTimer}) => {
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
-                        {/*<ButtonSendRegister onClick={startWhatsappValidation}/>*/}
                     </div>
                 )}
 
@@ -198,7 +191,6 @@ const CardReserve = ({cardTimer}) => {
                         <p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>
                         <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
                             <input type="text" value={code} onChange={handleCodeChange}/>
-                            <button onClick={handleCodeValidation} style={{marginTop: '10px'}}>Validar</button>
                         </div>
                         <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
                             Validar
