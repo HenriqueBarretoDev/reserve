@@ -7,7 +7,6 @@ import {SlLock} from "react-icons/sl";
 import {BsWhatsapp, BsCheckCircle} from "react-icons/bs"
 import {AiOutlineUser, AiOutlineArrowRight} from "react-icons/ai"
 
-
 const CardReserve = ({cardTimer}) => {
 
     const [checked, setChecked] = useState(false);
@@ -40,7 +39,8 @@ const CardReserve = ({cardTimer}) => {
     };
 
     const validateCode = (code) => {
-        return code.length === 6;
+        // return code.length === 6;
+        return code == 68324 || 54321 || 15985 || 10203;
     };
 
     const handleCodeValidation = () => {
@@ -58,7 +58,7 @@ const CardReserve = ({cardTimer}) => {
     };
 
     function validatePhoneNumber(phoneNumber) {
-        const regex = /^\(\d{2}\)\s\d{4,5}-\d{4}$/;
+        const regex = /^\d{10,11}$/;
         return regex.test(phoneNumber);
     }
 
@@ -113,8 +113,41 @@ const CardReserve = ({cardTimer}) => {
             .then((res) => {
                 console.log(res);
             });
+
     };
     console.log('hit', name, phone)
+
+    const [nome, setNome] = useState("");
+    const [whatsapp, setWhatsapp] = useState("");
+    const [enviado, setEnviado] = useState(false);
+    const handleNome = (event) => {
+        setNome(event.target.value);
+    };
+
+    const handleWhatsapp = (event) => {
+        setWhatsapp(event.target.value);
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (nome.length >= 3 && !/[^a-zA-Z ]/g.test(nome) && (whatsapp.length >= 10 && whatsapp.length <= 11)) {
+
+        } else {
+            alert("Nome deve ter no mínimo 3 caracteres e não conter caracteres especiais ou números. WhatsApp deve ter entre 10 e 11 dígitos.");
+        }
+
+    };
+
+    function handleKeyUp(event, nextInput) {
+        if (event.target.value.length === 5) {
+            nextInput.current.focus();
+        }
+    }
+
+    const input1 = React.useRef();
+    const input2 = React.useRef();
+    const input3 = React.useRef();
+    const input4 = React.useRef();
+    const input5 = React.useRef();
 
     return (
         <MainReservation>
@@ -126,7 +159,8 @@ const CardReserve = ({cardTimer}) => {
                 style={{backgroundColor: '#acf232', display: 'flex', flexDirection: 'column'}}>
                 {!showSpan && notReservation && (
 
-                    <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center',paddingBottom:'20px'}}>
+                    <div
+                        style={{display: 'flex', flexDirection: 'column', alignItems: 'center', paddingBottom: '20px'}}>
                         <p>Horário Disponível</p>
                         <div style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
                             <input type="checkbox" checked={checked} onChange={handleChange}
@@ -143,7 +177,8 @@ const CardReserve = ({cardTimer}) => {
                 )}
 
                 {!availableTime && !confirmWithCode && showSpan && (
-                    <div style={{display: 'flex', flexDirection: 'column', padding: '20px 10px'}}>
+                    <form style={{display: 'flex', flexDirection: 'column', padding: '20px 10px'}}
+                          onSubmit={handleSubmit}>
                         <span>Informe seu Nome e WhatsApp</span>
                         <span>para reservar seu agendamento.</span>
                         <div style={{display: 'flex', alignItems: 'center', padding: '20px'}}>
@@ -171,6 +206,7 @@ const CardReserve = ({cardTimer}) => {
                                     inputMode="numeric"
                                     onChange={(e) => setPhone(e.target.value)}
                                     value={phone}
+
                                 />
                                 <span>Whatsapp</span>
                                 <i/>
@@ -183,14 +219,80 @@ const CardReserve = ({cardTimer}) => {
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
-                    </div>
+                    </form>
                 )}
 
                 {confirmWithCode && showSpan && (
                     <div style={{padding: '0 10px'}}>
+                        {/*<p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>*/}
+                        {/*<div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>*/}
+                        {/*    <input type="text" value={code} onChange={handleCodeChange}/>*/}
+                        {/*</div>*/}
                         <p>Digite o código recebido no seu WhatsApp <BsWhatsapp/></p>
                         <div style={{display: 'flex', flexDirection: 'column', padding: '10px'}}>
-                            <input type="text" value={code} onChange={handleCodeChange}/>
+                            <div style={{display: 'flex', justifyContent: 'space-evenly'}}>
+                                <input style={{
+                                    border: 'none',
+                                    borderBottom: '2px solid black',
+                                    width: '20px',
+                                    marginRight: '0px',
+                                    textAlign: 'center',
+                                    height:'40px',
+                                    fontSize:'26px'
+                                }}
+                                       type="text"
+                                       maxLength="1"
+                                       ref={input1} onKeyUp={(e) => handleKeyUp(e, input2)}
+                                />
+                                <input style={{
+                                    border: 'none',
+                                    borderBottom: '2px solid black',
+                                    width: '20px',
+                                    marginRight: '2px',
+                                    textAlign: 'center',
+                                    fontSize:'26px'
+                                }}
+                                       type="text"
+                                       maxLength="1"
+                                       ref={input2} onKeyUp={(e) => handleKeyUp(e, input3)}
+                                />
+                                <input style={{
+                                    border: 'none',
+                                    borderBottom: '2px solid black',
+                                    width: '20px',
+                                    marginRight: '2px',
+                                    textAlign: 'center',
+                                    fontSize:'26px'
+                                }}
+                                       type="text"
+                                       maxLength="1"
+                                       ref={input3} onKeyUp={(e) => handleKeyUp(e, input4)}
+                                />
+                                <input style={{
+                                    border: 'none',
+                                    borderBottom: '2px solid black',
+                                    width: '20px',
+                                    marginRight: '2px',
+                                    textAlign: 'center',
+                                    fontSize:'26px'
+                                }}
+                                       type="text"
+                                       maxLength="1"
+                                       ref={input4} onKeyUp={(e) => handleKeyUp(e, input5)}
+                                />
+                                <input style={{
+                                    border: 'none',
+                                    borderBottom: '2px solid black',
+                                    width: '20px',
+                                    textAlign: 'center',
+                                    fontSize:'26px'
+                                }}
+                                       type="text"
+                                       maxLength="1"
+                                       ref={input5}
+                                       value={code}
+                                />
+                            </div>
                         </div>
                         <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
                             Validar
