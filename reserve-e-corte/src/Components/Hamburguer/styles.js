@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
 export const HamburguerContent = styled.div`
-  div {
-    display: flex;
-    duration: 1s;
-  }
-`;
+  display: flex;
+  height: 100%;
+  width: 20%;
+
+`
+
+export const ShowHamburgerMenu = styled.div`
+  position: fixed;
+  z-index: 1;
+`

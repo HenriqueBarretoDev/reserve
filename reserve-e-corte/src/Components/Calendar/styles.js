@@ -5,6 +5,7 @@ export const CalendarContent = styled.div`
   align-items: center;
   justify-content: center;
   height: 100%;
+  margin-top: 50px;
 
   .react-calendar__navigation__label {
     pointer-events: none;
