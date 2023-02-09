@@ -52,6 +52,14 @@ const Schedules = () => {
         setSelectedTime(time);
     };
 
+    function switchCalendar() {
+        if (showCalendar === false) {
+            onclick(setShowCalendar(true))
+        } else {
+            onclick(setShowCalendar(false))
+        }
+    }
+
     return (
         <ContainerSchedules>
             <header>
@@ -66,7 +74,7 @@ const Schedules = () => {
 
                 <IconsRightSchedules>
                     <div>
-                        <BsFillCalendar2EventFill onClick={() => setShowCalendar(true)}/>
+                        <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
                     <div>
                         <IoEllipsisVerticalSharp/>
