@@ -24,6 +24,11 @@ const CardReserve = ({cardTimer}) => {
     const [customerWithCompletedAppointment, setCustomerWithCompletedAppointment] = useState(false);
     const [name, setName] = useState('');
     const {time, setTime} = useAuth(10)
+    const [haircutType, setHaircutType] = useState(undefined)
+    const [haircut, setHaircut] = useState(true);
+    const [haircutPlus, setHaircutPlus] = useState(false);
+    const [beard, setBeard] = useState(false);
+    const [eyebrow, setEyebrow] = useState(false);
 
     const handleChangeNumberPhone = event => {
         const value = event.target.value;
@@ -75,8 +80,15 @@ const CardReserve = ({cardTimer}) => {
     function handleChange(event) {
         setChecked(event.target.checked)
         setShowSpan(event.target.checked);
-        setAvailableTime(false)
+        setHaircutType(true)
     }
+    function handleChangeHair(event) {
+        setChecked(event.target.checked)
+        setHaircutType(event.target.checked);
+        setAvailableTime(true)
+    }
+
+
 
     useEffect(() => {
         const currentTime = moment();
@@ -175,8 +187,49 @@ const CardReserve = ({cardTimer}) => {
                         </div>
                     </div>
                 )}
+                {haircutType && availableTime &&(
+                <div style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                    <input type="checkbox" checked={haircut} onChange={() => setHaircut(!haircut)}
+                           style={{
+                               minHeight: '20px',
+                               width: '20px',
+                               position: 'relative',
+                               top: '4px',
+                               right: '2px'
+                           }}/>
+                    <label>Corte</label>
+                    <input type="checkbox" checked={haircutPlus} onChange={() => setHaircutPlus(!haircutPlus)}
+                           style={{
+                               minHeight: '20px',
+                               width: '20px',
+                               position: 'relative',
+                               top: '4px',
+                               right: '2px'
+                           }}/>
+                    <label>Corte Com graxa</label>
+                    <input type="checkbox" checked={beard} onChange={() => setBeard(!beard)}
+                           style={{
+                               minHeight: '20px',
+                               width: '20px',
+                               position: 'relative',
+                               top: '4px',
+                               right: '2px'
+                           }}/>
+                    <label>Barba</label>
+                    <input type="checkbox" checked={eyebrow} onChange={()=> setEyebrow(!eyebrow)}
+                           style={{
+                               minHeight: '20px',
+                               width: '20px',
+                               position: 'relative',
+                               top: '4px',
+                               right: '2px'
+                           }}/>
+                    <label>Sombrancelha</label>
+                    <ButtonSend onClick={handleChangeHair} style={{marginTop: '10px'}}/>
+                        Confirmar
+                    </div>)}
 
-                {!availableTime && !confirmWithCode && showSpan && (
+                {availableTime && !confirmWithCode && showSpan && !haircutType && (
                     <form style={{display: 'flex', flexDirection: 'column', padding: '20px 10px'}}
                           onSubmit={handleSubmit}>
                         <span>Informe seu Nome e WhatsApp</span>
