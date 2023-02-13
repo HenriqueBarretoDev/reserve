@@ -4,8 +4,12 @@ export const CalendarContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  justify-items: center;
+  justify-self: center;
+  align-items: center;
+  align-self: flex-end;
   height: 100%;
-  margin-top: 50px;
+
 
   .react-calendar__navigation__label {
     pointer-events: none;

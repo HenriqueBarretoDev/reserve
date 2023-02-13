@@ -4,10 +4,10 @@ export const HamburguerContent = styled.div`
   display: flex;
   height: 100%;
   width: 20%;
-
 `
 
 export const ShowHamburgerMenu = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 2;
+  height: 200px;
 `

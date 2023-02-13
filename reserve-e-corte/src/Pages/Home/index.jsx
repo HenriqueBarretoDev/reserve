@@ -13,7 +13,7 @@ import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
 import MenuCalendar from "../../Components/Calendar";
 import {useNavigate} from "react-router";
-
+import LoginAdmin from "../../Components/LoginAdmin";
 const Home = () => {
 
     const [day, setDay] = useState(new Date().toLocaleString("pt-BR", {weekday: "long"}));
@@ -21,6 +21,7 @@ const Home = () => {
     const today = new Date();
     const [loading, setLoading] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [showAdmin, setShowAdmin] = useState(false)
 
     function updateCurrentDay() {
         setCurrentDay(new Date().getDay());
@@ -75,6 +76,13 @@ const Home = () => {
         }
     }
 
+    function switchAdmin(){
+        if(showAdmin === false){
+            onclick(setShowAdmin(true))
+        }else{
+            onclick(setShowAdmin(false))
+        }
+    }
 
     return (
         <ContainerSchedules>
@@ -93,10 +101,11 @@ const Home = () => {
                         <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
                     <div>
-                        <IoEllipsisVerticalSharp/>
+                        <IoEllipsisVerticalSharp onClick={switchAdmin}/>
                     </div>
                 </IconsRightSchedules>
             </header>
+            <div> {showAdmin && <LoginAdmin/>}</div>
             <div>{showCalendar &&
             <MenuCalendar/>}</div>
             <h1>Reserve seu horário</h1>

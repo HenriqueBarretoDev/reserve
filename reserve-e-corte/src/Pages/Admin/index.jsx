@@ -5,7 +5,7 @@ import {AdminContainer, AdminWorkingDays, DefineWorkingHours, WhatsAppAdmin} fro
 const Admin = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [nome, setNome] = useState("");
+    const [nome, setNome] = useState("Aryelson");
 
     useEffect(() => {
         if (!loading && localStorage.getItem("token") !== null) {
