@@ -62,7 +62,7 @@ export const IconsRightSchedules = styled.div`
     min-height: 20px;
     width: 100%;
     padding-right: 20px;
-    }
+  }
 `;
 
 
