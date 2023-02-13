@@ -127,6 +127,7 @@ const CardReserve = ({cardTimer}) => {
     const handleWhatsapp = (event) => {
         setWhatsapp(event.target.value);
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (nome.length >= 3 && !/[^a-zA-Z ]/g.test(nome) && (whatsapp.length >= 10 && whatsapp.length <= 11)) {
@@ -206,6 +207,8 @@ const CardReserve = ({cardTimer}) => {
                                     inputMode="numeric"
                                     onChange={(e) => setPhone(e.target.value)}
                                     value={phone}
+                                    maxLength={11}
+                                    minLength={10}
 
                                 />
                                 <span>Whatsapp</span>

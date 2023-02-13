@@ -12,13 +12,14 @@ import {AiOutlineCaretDown} from 'react-icons/ai';
 import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
 import MenuCalendar from "../../Components/Calendar";
+import {useNavigate} from "react-router";
 
-const Schedules = () => {
+const Home = () => {
 
     const [day, setDay] = useState(new Date().toLocaleString("pt-BR", {weekday: "long"}));
     const [currentDay, setCurrentDay] = useState(new Date().getDay());
     const today = new Date();
-
+    const [loading, setLoading] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
 
     function updateCurrentDay() {
@@ -52,6 +53,19 @@ const Schedules = () => {
         setSelectedTime(time);
     };
 
+    const navigate = useNavigate()
+    const logout = () => {
+        localStorage.removeItem("token");
+        navigate("/")
+    }
+    const login = () => {
+        setLoading(true);
+        setTimeout(() => {
+            localStorage.setItem("token", "token");
+            setLoading(false);
+        }, 2000);
+    };
+
     return (
         <ContainerSchedules>
             <header>
@@ -74,7 +88,7 @@ const Schedules = () => {
                 </IconsRightSchedules>
             </header>
             <div>{showCalendar &&
-                <MenuCalendar/>}</div>
+            <MenuCalendar/>}</div>
             <h1>Reserve seu horário</h1>
 
             <div>
@@ -94,8 +108,19 @@ const Schedules = () => {
                     ))}
                 </div>
             </div>
-
+            <div className="login-page">
+                <div>
+                    <label>Usuário</label>
+                    <input />
+                    <label>Senha</label>
+                    <input type="password" />
+                    <div className="enter">
+                        {loading && <div className="loader"></div>}
+                        <button onClick={login}>Entrar</button>
+                    </div>
+                </div>
+            </div>
         </ContainerSchedules>
     );
 };
-export default Schedules;
+export default Home;
