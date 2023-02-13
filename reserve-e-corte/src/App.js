@@ -1,13 +1,10 @@
-import './App.css';
+import React from 'react';
 
-import Home from './Pages/Home';
+import MyRouter from "./MyRouter";
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <Home/>
-        </div>
-    );
+        <MyRouter/>
+    )
 }
-
 export default App;
