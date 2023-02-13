@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from "react-router";
-import CardReserve from "../../Components/CardReserve";
+import {AdminContainer, AdminWorkingDays, DefineWorkingHours, WhatsAppAdmin} from "./styles";
 
 const Admin = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [nome, setNome] = useState("");
 
     useEffect(() => {
         if (!loading && localStorage.getItem("token") !== null) {
@@ -12,44 +13,52 @@ const Admin = () => {
         }
     }, [loading, navigate])
 
+    function goToHome() {
+        navigate('/')
+    }
 
     return (
-        <div>
-            <h2>Bem vindo Administrador</h2>
+        <AdminContainer>
+            <h2>Bem vindo  {nome ? nome : 'Administrador'}</h2>
 
-            <div>
+            <WhatsAppAdmin>
+                <h4>WhatsApp para administração cliente/salão</h4>
+                <input type="text"/>
+            </WhatsAppAdmin>
+
+            <AdminWorkingDays>
                 <h4>Dias a trabalhar</h4>
-                <div>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">seg</label>
-                </div>
-                <div>
+                    <label htmlFor="">Segunda-feira</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">ter</label>
-                </div>
-                <div>
+                    <label htmlFor="">Terça-feira</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">qua</label>
-                </div>
-                <div>
+                    <label htmlFor="">Quarta-feira</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">qui</label>
-                </div>
-                <div>
+                    <label htmlFor="">Quinta-feira</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">sex</label>
-                </div>
-                <div>
+                    <label htmlFor="">Sexta-feira</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">sab</label>
-                </div>
-                <div>
+                    <label htmlFor="">Sábado</label>
+                </span>
+                <span>
                     <input type="checkbox"/>
-                    <label htmlFor="">dom</label>
-                </div>
-            </div>
+                    <label htmlFor="">Domingo</label>
+                </span>
+            </AdminWorkingDays>
 
-            <div>
+            <DefineWorkingHours>
                 <h4>Definir jornada de trabalho segunda a sexta</h4>
                 <p>Inicio do expediente:
                     <select name="" id="">
@@ -59,7 +68,7 @@ const Admin = () => {
                         <option value="4">09:30</option>
                     </select>
                 </p>
-                <p>final do expediente
+                <p>final do expediente:
                     <select name="" id="">
                         <option value="1">12:00</option>
                         <option value="2">18:00</option>
@@ -67,9 +76,9 @@ const Admin = () => {
                         <option value="4">19;00</option>
                     </select>
                 </p>
-            </div>
+            </DefineWorkingHours>
 
-            <div>
+            <DefineWorkingHours>
                 <h4>Definir jornada de trabalho Sábado</h4>
                 <p>Inicio do expediente:
                     <select name="" id="">
@@ -79,7 +88,7 @@ const Admin = () => {
                         <option value="4">09:30</option>
                     </select>
                 </p>
-                <p>final do expediente
+                <p>final do expediente:
                     <select name="" id="">
                         <option value="1">12:00</option>
                         <option value="2">18:00</option>
@@ -87,9 +96,9 @@ const Admin = () => {
                         <option value="4">19;00</option>
                     </select>
                 </p>
-            </div>
+            </DefineWorkingHours>
 
-            <div>
+            <DefineWorkingHours>
                 <h4>Definir jornada de trabalho Domingo</h4>
                 <p>Inicio do expediente:
                     <select name="" id="">
@@ -99,16 +108,22 @@ const Admin = () => {
                         <option value="4">09:30</option>
                     </select>
                 </p>
-                <p>final do expediente
+                <p>final do expediente:
                     <select name="" id="">
                         <option value="1">12:00</option>
                         <option value="2">18:00</option>
                         <option value="3">18:30</option>
-                        <option value="4">19;00</option>
+                        <option value="4">19:00</option>
                     </select>
                 </p>
+            </DefineWorkingHours>
+
+            <div>
+                <button onClick={goToHome}>
+                    <h4> Voltar para agenda</h4>
+                </button>
             </div>
-        </div>
+        </AdminContainer>
     )
 }
 export default Admin
