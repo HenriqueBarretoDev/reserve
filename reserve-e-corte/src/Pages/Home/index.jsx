@@ -53,6 +53,7 @@ const Home = () => {
         setSelectedTime(time);
     };
 
+
     const navigate = useNavigate()
     const logout = () => {
         localStorage.removeItem("token");
@@ -65,6 +66,15 @@ const Home = () => {
             setLoading(false);
         }, 2000);
     };
+
+    function switchCalendar() {
+        if (showCalendar === false) {
+            onclick(setShowCalendar(true))
+        } else {
+            onclick(setShowCalendar(false))
+        }
+    }
+
 
     return (
         <ContainerSchedules>
@@ -80,7 +90,7 @@ const Home = () => {
 
                 <IconsRightSchedules>
                     <div>
-                        <BsFillCalendar2EventFill onClick={() => setShowCalendar(true)}/>
+                        <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
                     <div>
                         <IoEllipsisVerticalSharp/>
