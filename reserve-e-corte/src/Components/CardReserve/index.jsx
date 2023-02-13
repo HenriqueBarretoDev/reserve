@@ -224,7 +224,7 @@ const CardReserve = ({cardTimer}) => {
                                top: '4px',
                                right: '2px'
                            }}/>
-                    <label>Sombrancelha</label>
+                    <label>Sobrancelha</label>
                     <ButtonSend onClick={handleChangeHair} style={{marginTop: '10px'}}/>
                         Confirmar
                     </div>)}
