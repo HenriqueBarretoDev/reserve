@@ -82,12 +82,12 @@ const CardReserve = ({cardTimer}) => {
         setShowSpan(event.target.checked);
         setHaircutType(true)
     }
+
     function handleChangeHair(event) {
         setChecked(event.target.checked)
         setHaircutType(event.target.checked);
         setAvailableTime(true)
     }
-
 
 
     useEffect(() => {
@@ -162,6 +162,7 @@ const CardReserve = ({cardTimer}) => {
     const input4 = React.useRef();
     const input5 = React.useRef();
 
+
     return (
         <MainReservation>
             <BoxTime>
@@ -188,46 +189,85 @@ const CardReserve = ({cardTimer}) => {
                         </div>
                     </div>
                 )}
-                {haircutType && availableTime &&(
-                <div style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                    <input type="checkbox" checked={haircut} onChange={() => setHaircut(!haircut)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Corte</label>
-                    <input type="checkbox" checked={haircutPlus} onChange={() => setHaircutPlus(!haircutPlus)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Corte Com graxa</label>
-                    <input type="checkbox" checked={beard} onChange={() => setBeard(!beard)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Barba</label>
-                    <input type="checkbox" checked={eyebrow} onChange={()=> setEyebrow(!eyebrow)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Sobrancelha</label>
-                    <ButtonSend onClick={handleChangeHair} style={{marginTop: '10px'}}/>
-                        Confirmar
+                {haircutType && availableTime && (
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'start',
+                        flexDirection: 'column',
+                    }}>
+
+                        <div>
+                            <input type="checkbox" checked={haircut} onChange={() => setHaircut(!haircut)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px',
+                                       marginTop: '30px'
+                                   }}/>
+                            <label>Corte</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={haircutPlus} onChange={() => setHaircutPlus(!haircutPlus)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+                            <label>Corte Com graxa</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={beard} onChange={() => setBeard(!beard)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+
+                            <label>Barba</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={eyebrow} onChange={() => setEyebrow(!eyebrow)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+                            <label>Sobrancelha</label>
+                        </div>
+
+                        <button onClick={handleChangeHair} style={{
+                            backgroundColor: '#f87125',
+                            color: '#08152c',
+                            fontSize: '17px',
+                            fontWeight: '500',
+                            borderRadius: '0.9em',
+                            border: 'none',
+                            letterSpacing: '0.05em',
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: '0.35em',
+                            width: '100%',
+                            height: '2.8em',
+                            boxShadow: 'inset 0 0 1.6em -0.6em #86D9F8',
+                            textAlign: 'center',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            margin: '50px 0 30px 0'
+                        }}>
+                            <strong>Confirmar</strong>
+                        </button>
+
                     </div>)}
 
                 {availableTime && !confirmWithCode && showSpan && !haircutType && (
@@ -293,8 +333,8 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '0px',
                                     textAlign: 'center',
-                                    height:'40px',
-                                    fontSize:'26px'
+                                    height: '40px',
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -306,7 +346,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -318,7 +358,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -330,7 +370,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -341,16 +381,18 @@ const CardReserve = ({cardTimer}) => {
                                     borderBottom: '2px solid black',
                                     width: '20px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
                                        ref={input5}
                                        value={code}
+
                                 />
+
                             </div>
                         </div>
-                        <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
+                        <ButtonSend onClick={handleCodeValidation}  style={{marginTop: '10px'}}>
                             Validar
                             <div>
                                 <AiOutlineArrowRight/>
