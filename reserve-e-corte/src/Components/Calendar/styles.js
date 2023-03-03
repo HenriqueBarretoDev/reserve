@@ -6,9 +6,19 @@ export const CalendarContent = styled.div`
   justify-content: center;
   justify-items: center;
   justify-self: center;
-  align-items: center;
   align-self: flex-end;
   height: 100%;
+  animation: slideDown 0.5s ease;
+  transform-origin: top;
+
+  @keyframes slideDown {
+    from {
+      transform: scaleY(0);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
 
 
   .react-calendar__navigation__label {

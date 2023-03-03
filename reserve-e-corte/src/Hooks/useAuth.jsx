@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 export const AuthContext = React.createContext({});
 
@@ -9,6 +9,8 @@ export const AuthProvider = (props) => {
     const [notAvailableTime, setNotAvailableTime] = useState(false)
     const [confirmWithCode, setConfirmWithCode] = useState(false)
     const [time, setTime] = useState()
+    const [isOpen, setIsOpen] = useState(false);
+
 
     return (
         <AuthContext.Provider value={{
@@ -20,6 +22,8 @@ export const AuthProvider = (props) => {
             notAvailableTime,
             setTime,
             time,
+            isOpen,
+            setIsOpen
         }}>
             {props.children}
         </AuthContext.Provider>
