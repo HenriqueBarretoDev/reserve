@@ -1,10 +1,6 @@
 import React, {useState} from "react";
-import styled from "styled-components";
-import {AiFillDatabase} from "react-icons/ai";
-import iconHall from "../../Assets/Icons/iconHall.png";
 import {HiBarsArrowDown} from "react-icons/hi2";
 import {DropdownIcon, DropdownOptions, DropdownWrapper, Option} from "./styles";
-import {FcApproval} from "react-icons/fc";
 
 const Dropdown = () => {
     const [open, setOpen] = useState(false);
@@ -27,15 +23,15 @@ const Dropdown = () => {
     });
 
     return (
-        <DropdownWrapper className="dropdown-wrapper">
-
-            <DropdownIcon onClick={handleToggleDropdown}>
-                <HiBarsArrowDown style={{minHeight: '40px', width: '40px'}}/>
+        <DropdownWrapper className="dropdown-wrapper" onClick={handleToggleDropdown}>
+            <DropdownIcon>
+                <HiBarsArrowDown style={{width: '30px', height: '30px'}}/>
             </DropdownIcon>
-            <DropdownOptions open={open} style={{borderRadius:'10px'}}>
-                <Option style={{padding:'10px'}}>Fale Conosco</Option>
-                <Option style={{padding:'10px'}}>Agendar Maquiagem</Option>
-                <Option style={{padding:'10px'}}>Admin</Option>
+            <DropdownOptions open={open} style={{borderRadius: '10px'}}>
+                <Option style={{padding: '10px'}}>Fale Conosco</Option>
+                <Option style={{padding: '10px'}}>Agendar Maquiagem</Option>
+                <Option style={{padding: '10px'}}>Cadastrar Promoção</Option>
+                <Option style={{padding: '10px'}}>Admin</Option>
             </DropdownOptions>
         </DropdownWrapper>
     );

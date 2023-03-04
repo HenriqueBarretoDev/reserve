@@ -61,7 +61,7 @@ export const IconsRightSchedules = styled.div`
   padding: 5px 10px;
   margin: 0;
   align-items: center;
-  //background-color: red;
+  min-width: 100px;
 
   svg {
     padding-left: 20px;
@@ -69,21 +69,17 @@ export const IconsRightSchedules = styled.div`
     width: 100%;
     padding-right: 20px;
   }
-  div{
-    padding: 0 10px 0 0;
-  }
+
   ul {
-    
-      position: relative;
-      top: calc(100% + 0.5rem);
-      right: 0;
-      width: 50%;
-      background-color: white;
-      border: 1px solid black;
-      padding: 0.5rem;
-      margin-top: 0;
-      list-style: none;
-    
+    position: relative;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: 50%;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0.5rem;
+    margin-top: 0;
+    list-style: none;
   }
 
   li {
@@ -93,6 +89,10 @@ export const IconsRightSchedules = styled.div`
 
   li:hover {
     background-color: #ccc;
+  }
+
+  &div:nth-child(1) {
+    background-color: #f87125;
   }
 `;
 

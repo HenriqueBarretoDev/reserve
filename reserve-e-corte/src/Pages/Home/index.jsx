@@ -16,6 +16,7 @@ import {useNavigate} from "react-router";
 import LoginAdmin from "../../Components/LoginAdmin";
 import iconHall from '../../Assets/Icons/iconHall.png'
 import Dropdown from "../../Components/DropDown";
+import {format} from 'date-fns';
 
 const Home = () => {
 
@@ -106,28 +107,37 @@ const Home = () => {
         }
     }
 
+
+    function getCurrentDate() {
+        const dataAtual = new Date();
+        const dia = format(dataAtual, 'dd');
+        const mes = format(dataAtual, 'MM');
+        return `${dia}/${mes}`;
+    }
+
     return (
         <ContainerSchedules>
             <header>
                 <IconsLeftSchedules>
                     {/*<HamburguerMenu/>*/}
                     <h1>
-                        <p>03/03 - </p>
+                        <p>{getCurrentDate()} - </p>
                         <p>- {day}</p>
                         <AiOutlineCaretDown/>
                     </h1>
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>
-                    <div style={{marginRight:'50px'}}>
+                    <div style={{width:'30px'}}>
                         <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
                     {/*<div>*/}
-                        {/*<IoEllipsisVerticalSharp onClick={switchAdmin}/>*/}
-                        {/*<IoEllipsisVerticalSharp onClick={toggleMenu}/>*/}
+                    {/*<IoEllipsisVerticalSharp onClick={switchAdmin}/>*/}
+                    {/*<IoEllipsisVerticalSharp onClick={toggleMenu}/>*/}
                     {/*</div>*/}
-                    <div style={{position:'absolute',right:'-40px'}}>
-                        <Dropdown/>
+
+                    <div>
+                        <Dropdown />
                     </div>
                 </IconsRightSchedules>
 

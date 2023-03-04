@@ -437,7 +437,7 @@ const CardReserve = ({cardTimer}) => {
                         <p>Agendamento concluído com sucesso! </p>
                         <FcApproval style={{minHeight: '40px', width: '40px'}}/>
                         <div>
-                            <p>Agora é só aguardar tranquilamente.</p>
+                            <p>Agora é só aguardar.</p>
                             <p>Você receberá uma mensagem um pouco antes para te lembrar.</p>
                             <p>Até breve... {time}</p>
                         </div>
