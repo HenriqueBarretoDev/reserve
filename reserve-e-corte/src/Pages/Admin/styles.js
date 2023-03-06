@@ -8,7 +8,15 @@ export const WhatsAppAdmin = styled.div`
   align-items: center;
 
   input {
-    width: 80%;
+    max-height: 30px;
+    padding: 10px 20px;
+    border: 1px solid black;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    justify-items: center;
+    justify-content: center;
+    text-align: center;
   }
 `;
 
@@ -20,10 +28,11 @@ export const AdminContainer = styled.div`
     text-align: center;
   }
 
-  div{
+  div {
     display: flex;
     flex-direction: column;
   }
+
   button {
     display: flex;
     align-self: center;
@@ -32,7 +41,10 @@ export const AdminContainer = styled.div`
     justify-content: center;
     align-items: center;
     align-content: center;
-    width: 80%;
+    padding: 10px 20px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px solid black;
   }
 `
 
@@ -60,6 +72,7 @@ export const AdminWorkingDays = styled.div`
   h4 {
     text-align: center;
   }
+
   span {
     padding-left: 20px;
   }
@@ -73,5 +86,16 @@ export const DefineWorkingHours = styled.div`
 
   p {
     padding-left: 20px;
+  }
+
+  button {
+    cursor: pointer;
+    margin-top: 10px;
+    
+    :active {
+      transform: translateY(2px);
+      background-color: #ccc;
+    }
+
   }
 `

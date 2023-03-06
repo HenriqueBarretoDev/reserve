@@ -91,7 +91,6 @@ const CardReserve = ({cardTimer}) => {
         setShowSpan(true)
         setAvailableTime(true)
         setHaircutType(false)
-
     }
 
 
@@ -251,27 +250,6 @@ const CardReserve = ({cardTimer}) => {
                             <label>Sobrancelha</label>
                         </div>
 
-                        {/*<button onClick={handleChangeHair} style={{*/}
-                        {/*    backgroundColor: '#f87125',*/}
-                        {/*    color: '#08152c',*/}
-                        {/*    fontSize: '17px',*/}
-                        {/*    fontWeight: '500',*/}
-                        {/*    borderRadius: '0.9em',*/}
-                        {/*    border: 'none',*/}
-                        {/*    letterSpacing: '0.05em',*/}
-                        {/*    display: 'flex',*/}
-                        {/*    alignItems: 'center',*/}
-                        {/*    padding: '0.35em',*/}
-                        {/*    width: '100%',*/}
-                        {/*    height: '2.8em',*/}
-                        {/*    boxShadow: 'inset 0 0 1.6em -0.6em #86D9F8',*/}
-                        {/*    textAlign: 'center',*/}
-                        {/*    display: 'flex',*/}
-                        {/*    justifyContent: 'center',*/}
-                        {/*    margin: '50px 0 30px 0'*/}
-                        {/*}}>*/}
-                        {/*    <strong>Confirmar</strong>*/}
-                        {/*</button>*/}
                         <ButtonSend onClick={handleChangeHair} style={{marginTop: '30px'}}>
                             <strong>Confirmar</strong>
                             <div>

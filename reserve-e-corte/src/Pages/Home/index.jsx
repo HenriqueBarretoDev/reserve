@@ -7,9 +7,7 @@ import {
 } from './styles';
 
 import {BsFillCalendar2EventFill} from 'react-icons/bs';
-import {IoEllipsisVerticalSharp} from 'react-icons/io5';
 import {AiOutlineCaretDown} from 'react-icons/ai';
-import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
 import MenuCalendar from "../../Components/Calendar";
 import {useNavigate} from "react-router";
@@ -17,6 +15,7 @@ import LoginAdmin from "../../Components/LoginAdmin";
 import iconHall from '../../Assets/Icons/iconHall.png'
 import Dropdown from "../../Components/DropDown";
 import {format} from 'date-fns';
+import {useAuth} from "../../Hooks/useAuth";
 
 const Home = () => {
 
@@ -59,14 +58,41 @@ const Home = () => {
 
     const [selectedTime, setSelectedTime] = useState(null);
 
-    const startTime = 8;
-    const endTime = 18;
+    const {
+        startTime,
+        setStartTime,
+        endTime,
+        setEndTime,
+        newStartTime,
+        setNewStartTime,
+        newEndTime,
+        setNewEndTime,
+        maxTime,
+        maxMinutes,
+        setMaxMinutes,
+    } = useAuth()
+
     const interval = 25;
     const availableTimes = [];
 
-    for (let i = startTime; i <= endTime; i++) {
+    for (let i = newStartTime; i <= newEndTime; i++) {
         for (let j = 0; j < 60; j += interval) {
-            availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
+            const nextTime = j + interval >= 60 ? [i + 1, 0] : [i, j + interval];
+            if (i < maxTime || (i === maxTime && j < maxMinutes)) {
+                if (
+                    nextTime[0] < maxTime ||
+                    (nextTime[0] === maxTime && nextTime[1] <= maxMinutes)
+                ) {
+                    const diff = nextTime[1] - j;
+                    if (diff >= interval || diff < 0) {
+                        availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
+                    }
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
         }
     }
 
@@ -107,7 +133,6 @@ const Home = () => {
         }
     }
 
-
     function getCurrentDate() {
         const dataAtual = new Date();
         const dia = format(dataAtual, 'dd');
@@ -119,25 +144,20 @@ const Home = () => {
         <ContainerSchedules>
             <header>
                 <IconsLeftSchedules>
-                    {/*<HamburguerMenu/>*/}
                     <h1>
-                        <p>{getCurrentDate()} - </p>
-                        <p>- {day}</p>
+                        <p>{getCurrentDate()}  </p>
+                        <p> - </p>
+                        <span> {day}</span>
                         <AiOutlineCaretDown/>
                     </h1>
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>
-                    <div style={{width:'30px'}}>
+                    <div style={{width: '30px', cursor: 'pointer'}}>
                         <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
-                    {/*<div>*/}
-                    {/*<IoEllipsisVerticalSharp onClick={switchAdmin}/>*/}
-                    {/*<IoEllipsisVerticalSharp onClick={toggleMenu}/>*/}
-                    {/*</div>*/}
-
                     <div>
-                        <Dropdown />
+                        <Dropdown/>
                     </div>
                 </IconsRightSchedules>
 
@@ -147,15 +167,9 @@ const Home = () => {
             <div>
                 {showCalendar && <MenuCalendar/>}
             </div>
-            {/*<h1>Reserve seu horário</h1>*/}
-
             <h1>Salão do Juca <img style={{position: 'relative', top: '8px'}} src={iconHall} alt=""/></h1>
 
             <div>
-                {/*<p>*/}
-                {/*    Data atual: {currentDate.toLocaleDateString()}{" "}*/}
-                {/*    {currentTime.toLocaleTimeString()}*/}
-                {/*</p>*/}
                 <p style={{paddingLeft: '20px'}}>
                     <strong>
                         Reserve seu horário
@@ -173,18 +187,6 @@ const Home = () => {
                     ))}
                 </div>
             </div>
-            {/*<div className="login-page">*/}
-            {/*    <div>*/}
-            {/*        <label>Usuário</label>*/}
-            {/*        <input/>*/}
-            {/*        <label>Senha</label>*/}
-            {/*        <input type="password"/>*/}
-            {/*        <div className="enter">*/}
-            {/*            {loading && <div className="loader"></div>}*/}
-            {/*            <button onClick={login}>Entrar</button>*/}
-            {/*        </div>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
             <h1>Próximo dia >></h1>
         </ContainerSchedules>
     );

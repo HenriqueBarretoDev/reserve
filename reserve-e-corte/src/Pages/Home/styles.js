@@ -52,6 +52,10 @@ export const IconsLeftSchedules = styled.div`
     size: 10px !important;
     margin: 5px 0 0 2px;
   }
+
+  span::first-letter {
+    text-transform: uppercase;
+  }
 `;
 
 export const IconsRightSchedules = styled.div`
