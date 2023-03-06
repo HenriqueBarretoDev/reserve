@@ -6,7 +6,8 @@ import moment from 'moment';
 import {SlLock} from "react-icons/sl";
 import {BsWhatsapp, BsCheckCircle} from "react-icons/bs"
 import {AiOutlineUser, AiOutlineArrowRight, AiOutlineArrowLeft} from "react-icons/ai"
-import { FcApproval } from "react-icons/fc";
+import {FcApproval} from "react-icons/fc";
+
 const CardReserve = ({cardTimer}) => {
 
     const [checked, setChecked] = useState(false);
@@ -82,6 +83,25 @@ const CardReserve = ({cardTimer}) => {
         setAvailableTime(true)
         setHaircutType(true)
 
+    }
+
+    function handleBackChange(e) {
+        setShowSpan(false)
+        setNotReservation(true)
+        setHaircutType(false)
+    }
+
+    function handleBackChangeValidation(e) {
+        setShowSpan(false)
+        setNotReservation(true)
+        setHaircutType(true)
+    }
+
+    function handleBackCode(e) {
+        setAvailableTime(true)
+        setConfirmWithCode(false)
+        setShowSpan(true)
+        setHaircutType(false)
     }
 
     function handleChangeHair(event) {
@@ -257,7 +277,7 @@ const CardReserve = ({cardTimer}) => {
                             </div>
                         </ButtonSend>
 
-                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                        <BackButton onClick={handleBackChange} style={{margin: '10px 0 20px 0'}}>
                             <div>
                                 <AiOutlineArrowLeft/>
                             </div>
@@ -311,7 +331,7 @@ const CardReserve = ({cardTimer}) => {
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
-                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                        <BackButton onClick={handleBackChangeValidation} style={{margin: '10px 0 20px 0'}}>
                             <div>
                                 <AiOutlineArrowLeft/>
                             </div>
@@ -388,7 +408,7 @@ const CardReserve = ({cardTimer}) => {
                                        type="text"
                                        maxLength="1"
                                        ref={input5}
-                                       // value={code}
+                                    // value={code}
 
                                 />
 
@@ -400,7 +420,7 @@ const CardReserve = ({cardTimer}) => {
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
-                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                        <BackButton onClick={handleBackCode} style={{margin: '10px 0 20px 0'}}>
                             <div>
                                 <AiOutlineArrowLeft/>
                             </div>
@@ -411,7 +431,7 @@ const CardReserve = ({cardTimer}) => {
                 )}
 
                 {reservedTime && (
-                    <div style={{padding:'0 10px'}}>
+                    <div style={{padding: '0 10px'}}>
                         <p>Agendamento concluído com sucesso! </p>
                         <FcApproval style={{minHeight: '40px', width: '40px'}}/>
                         <div>
