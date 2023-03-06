@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 const AdminScheduler = () => {
     const [startWorkTime, setStartWorkTime] = useState('08:00');
@@ -20,15 +20,15 @@ const AdminScheduler = () => {
         reservationTime <= endWorkTimeDate;
         reservationTime.setMinutes(reservationTime.getMinutes() + appointmentInterval)
     ) {
-        availableReservationTimes.push(reservationTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+        availableReservationTimes.push(reservationTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}));
     }
 
     const addAppointment = (client, reservationTime) => {
         const appointment = {
             client,
-            startTime: startWorkTimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            startTime: startWorkTimeDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
             reservationTime,
-            endTime: endWorkTimeDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            endTime: endWorkTimeDate.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
         };
         setAppointments([...appointments, appointment]);
     };
@@ -48,7 +48,7 @@ const AdminScheduler = () => {
                     onChange={(event) => setStartWorkTime(event.target.value)}
                 />
             </label>
-            <br />
+            <br/>
             <label>
                 Horário de Término:
                 <input
@@ -57,7 +57,7 @@ const AdminScheduler = () => {
                     onChange={(event) => setEndWorkTime(event.target.value)}
                 />
             </label>
-            <br />
+            <br/>
             <label>
                 Intervalo de Atendimento (em minutos):
                 <input
@@ -66,14 +66,14 @@ const AdminScheduler = () => {
                     onChange={(event) => setAppointmentInterval(event.target.value)}
                 />
             </label>
-            <br />
+            <br/>
             {appointments.map((appointment) => (
                 <li key={appointment.id}>
                     {appointment.startTime.toLocaleTimeString()} -{" "}
                     {appointment.endTime.toLocaleTimeString()}
                 </li>
             ))}
-        </ul>
+        </div>
     );
 };
 

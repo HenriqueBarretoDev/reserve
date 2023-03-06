@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
     ContainerSchedules,
     IconsLeftSchedules,
@@ -7,13 +7,16 @@ import {
 } from './styles';
 
 import {BsFillCalendar2EventFill} from 'react-icons/bs';
-import {IoEllipsisVerticalSharp} from 'react-icons/io5';
 import {AiOutlineCaretDown} from 'react-icons/ai';
-import HamburguerMenu from '../../Components/Hamburguer';
 import CardReserve from "../../Components/CardReserve";
 import MenuCalendar from "../../Components/Calendar";
 import {useNavigate} from "react-router";
 import LoginAdmin from "../../Components/LoginAdmin";
+import iconHall from '../../Assets/Icons/iconHall.png'
+import Dropdown from "../../Components/DropDown";
+import {format} from 'date-fns';
+import {useAuth} from "../../Hooks/useAuth";
+
 const Home = () => {
 
     const [day, setDay] = useState(new Date().toLocaleString("pt-BR", {weekday: "long"}));
@@ -22,13 +25,15 @@ const Home = () => {
     const [loading, setLoading] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
     const [showAdmin, setShowAdmin] = useState(false)
+    const [currentTime, setCurrentTime] = useState(new Date());
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [menuVisible, setMenuVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     function updateCurrentDay() {
         setCurrentDay(new Date().getDay());
     }
-
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const [currentDate, setCurrentDate] = useState(new Date());
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -37,16 +42,57 @@ const Home = () => {
         return () => clearInterval(intervalId);
     }, []);
 
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        window.addEventListener("click", handleOutsideClick);
+        return () => window.removeEventListener("click", handleOutsideClick);
+    }, [dropdownRef]);
+
     const [selectedTime, setSelectedTime] = useState(null);
 
-    const startTime = 8;
-    const endTime = 18;
+    const {
+        startTime,
+        setStartTime,
+        endTime,
+        setEndTime,
+        newStartTime,
+        setNewStartTime,
+        newEndTime,
+        setNewEndTime,
+        maxTime,
+        maxMinutes,
+        setMaxMinutes,
+    } = useAuth()
+
     const interval = 25;
     const availableTimes = [];
 
-    for (let i = startTime; i <= endTime; i++) {
+    for (let i = newStartTime; i <= newEndTime; i++) {
         for (let j = 0; j < 60; j += interval) {
-            availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
+            const nextTime = j + interval >= 60 ? [i + 1, 0] : [i, j + interval];
+            if (i < maxTime || (i === maxTime && j < maxMinutes)) {
+                if (
+                    nextTime[0] < maxTime ||
+                    (nextTime[0] === maxTime && nextTime[1] <= maxMinutes)
+                ) {
+                    const diff = nextTime[1] - j;
+                    if (diff >= interval || diff < 0) {
+                        availableTimes.push(`${i}:${j < 10 ? "0" + j : j}`);
+                    }
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
         }
     }
 
@@ -54,6 +100,9 @@ const Home = () => {
         setSelectedTime(time);
     };
 
+    const toggleMenu = () => {
+        setMenuVisible(!menuVisible);
+    };
 
     const navigate = useNavigate()
     const logout = () => {
@@ -76,44 +125,55 @@ const Home = () => {
         }
     }
 
-    function switchAdmin(){
-        if(showAdmin === false){
+    function switchAdmin() {
+        if (showAdmin === false) {
             onclick(setShowAdmin(true))
-        }else{
+        } else {
             onclick(setShowAdmin(false))
         }
+    }
+
+    function getCurrentDate() {
+        const dataAtual = new Date();
+        const dia = format(dataAtual, 'dd');
+        const mes = format(dataAtual, 'MM');
+        return `${dia}/${mes}`;
     }
 
     return (
         <ContainerSchedules>
             <header>
                 <IconsLeftSchedules>
-                    <HamburguerMenu/>
-
-
-                    <h1>{day}
+                    <h1>
+                        <p>{getCurrentDate()}  </p>
+                        <p> - </p>
+                        <span> {day}</span>
                         <AiOutlineCaretDown/>
                     </h1>
                 </IconsLeftSchedules>
 
                 <IconsRightSchedules>
-                    <div>
+                    <div style={{width: '30px', cursor: 'pointer'}}>
                         <BsFillCalendar2EventFill onClick={switchCalendar}/>
                     </div>
                     <div>
-                        <IoEllipsisVerticalSharp onClick={switchAdmin}/>
+                        <Dropdown/>
                     </div>
                 </IconsRightSchedules>
+
             </header>
-            <div> {showAdmin && <LoginAdmin/>}</div>
-            <div>{showCalendar &&
-            <MenuCalendar/>}</div>
-            <h1>Reserve seu horário</h1>
+
+            <div>{showAdmin && <LoginAdmin/>}</div>
+            <div>
+                {showCalendar && <MenuCalendar/>}
+            </div>
+            <h1>Salão do Juca <img style={{position: 'relative', top: '8px'}} src={iconHall} alt=""/></h1>
 
             <div>
-                <p>
-                    Data atual: {currentDate.toLocaleDateString()}{" "}
-                    {currentTime.toLocaleTimeString()}
+                <p style={{paddingLeft: '20px'}}>
+                    <strong>
+                        Reserve seu horário
+                    </strong>
                 </p>
                 <div>
                     {availableTimes.map((time) => (
@@ -127,18 +187,7 @@ const Home = () => {
                     ))}
                 </div>
             </div>
-            <div className="login-page">
-                <div>
-                    <label>Usuário</label>
-                    <input />
-                    <label>Senha</label>
-                    <input type="password" />
-                    <div className="enter">
-                        {loading && <div className="loader"></div>}
-                        <button onClick={login}>Entrar</button>
-                    </div>
-                </div>
-            </div>
+            <h1>Próximo dia >></h1>
         </ContainerSchedules>
     );
 };

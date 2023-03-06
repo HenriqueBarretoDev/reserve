@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {LoginPage, LoginForm} from "./styles"
 
-const LoginAdmin = ()=> {
+const LoginAdmin = () => {
     const [loading, setLoading] = useState(false);
-
 
 
     const login = () => {
@@ -14,23 +13,20 @@ const LoginAdmin = ()=> {
         }, 2000);
     };
 
-    return(
+    return (
         <LoginPage>
             <LoginForm>
-            <label>Usuário</label>
+                <label>Usuário</label>
                 <input type="text"/>
                 <label>Senha</label>
-                <input type="password" />
+                <input type="password"/>
                 <div className="enter">
                     {loading && <div className="loader"></div>}
                     <button onClick={login}>Entrar</button>
                 </div>
             </LoginForm>
-            </LoginPage>
-
-
-
-            )
+        </LoginPage>
+    )
 
 }
 export default LoginAdmin

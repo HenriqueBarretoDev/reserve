@@ -7,7 +7,8 @@ export const HamburguerContent = styled.div`
 `
 
 export const ShowHamburgerMenu = styled.div`
-  position: fixed;
+  //position: fixed;
+  position: absolute;
   z-index: 2;
   height: 200px;
 `

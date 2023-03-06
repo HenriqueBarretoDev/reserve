@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
 
-import {BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./styles";
+import {BackButton, BoxTime, ButtonSend, InputMenu, MainReservation, Reservations} from "./styles";
 import {useAuth} from "../../Hooks/useAuth";
 import moment from 'moment';
 import {SlLock} from "react-icons/sl";
 import {BsWhatsapp, BsCheckCircle} from "react-icons/bs"
-import {AiOutlineUser, AiOutlineArrowRight} from "react-icons/ai"
-
+import {AiOutlineUser, AiOutlineArrowRight, AiOutlineArrowLeft} from "react-icons/ai"
+import { FcApproval } from "react-icons/fc";
 const CardReserve = ({cardTimer}) => {
 
     const [checked, setChecked] = useState(false);
@@ -78,16 +78,20 @@ const CardReserve = ({cardTimer}) => {
     }
 
     function handleChange(event) {
-        setChecked(event.target.checked)
-        setShowSpan(event.target.checked);
-        setHaircutType(true)
-    }
-    function handleChangeHair(event) {
-        setChecked(event.target.checked)
-        setHaircutType(event.target.checked);
+        setShowSpan(true)
         setAvailableTime(true)
+        setHaircutType(true)
+
     }
 
+    function handleChangeHair(event) {
+        // setChecked(event.target.checked)
+        // setHaircutType(event.target.checked);
+        setConfirmWithCode(false)
+        setShowSpan(true)
+        setAvailableTime(true)
+        setHaircutType(false)
+    }
 
 
     useEffect(() => {
@@ -162,6 +166,7 @@ const CardReserve = ({cardTimer}) => {
     const input4 = React.useRef();
     const input5 = React.useRef();
 
+
     return (
         <MainReservation>
             <BoxTime>
@@ -188,46 +193,77 @@ const CardReserve = ({cardTimer}) => {
                         </div>
                     </div>
                 )}
-                {haircutType && availableTime &&(
-                <div style={{flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-                    <input type="checkbox" checked={haircut} onChange={() => setHaircut(!haircut)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Corte</label>
-                    <input type="checkbox" checked={haircutPlus} onChange={() => setHaircutPlus(!haircutPlus)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Corte Com graxa</label>
-                    <input type="checkbox" checked={beard} onChange={() => setBeard(!beard)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Barba</label>
-                    <input type="checkbox" checked={eyebrow} onChange={()=> setEyebrow(!eyebrow)}
-                           style={{
-                               minHeight: '20px',
-                               width: '20px',
-                               position: 'relative',
-                               top: '4px',
-                               right: '2px'
-                           }}/>
-                    <label>Sobrancelha</label>
-                    <ButtonSend onClick={handleChangeHair} style={{marginTop: '10px'}}/>
-                        Confirmar
+                {haircutType && availableTime && (
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'start',
+                        flexDirection: 'column',
+                    }}>
+                        <p>Selecione o procedimento</p>
+                        <div>
+                            <input type="checkbox" checked={haircut} onChange={() => setHaircut(!haircut)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px',
+                                       marginTop: '30px'
+                                   }}/>
+                            <label>Corte</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={haircutPlus} onChange={() => setHaircutPlus(!haircutPlus)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+                            <label>Corte Com graxa</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={beard} onChange={() => setBeard(!beard)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+
+                            <label>Barba</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" checked={eyebrow} onChange={() => setEyebrow(!eyebrow)}
+                                   style={{
+                                       minHeight: '20px',
+                                       width: '20px',
+                                       position: 'relative',
+                                       top: '4px',
+                                       right: '2px'
+                                   }}/>
+                            <label>Sobrancelha</label>
+                        </div>
+
+                        <ButtonSend onClick={handleChangeHair} style={{marginTop: '30px'}}>
+                            <strong>Confirmar</strong>
+                            <div>
+                                <AiOutlineArrowRight/>
+                            </div>
+                        </ButtonSend>
+
+                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                            <div>
+                                <AiOutlineArrowLeft/>
+                            </div>
+                            <strong>Voltar</strong>
+                        </BackButton>
+
                     </div>)}
 
                 {availableTime && !confirmWithCode && showSpan && !haircutType && (
@@ -270,11 +306,17 @@ const CardReserve = ({cardTimer}) => {
                         </div>
 
                         <ButtonSend onClick={startWhatsappValidation} style={{marginTop: '10px'}}>
-                            Enviar
+                            <strong>Enviar</strong>
                             <div>
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
+                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                            <div>
+                                <AiOutlineArrowLeft/>
+                            </div>
+                            <strong>Voltar</strong>
+                        </BackButton>
                     </form>
                 )}
 
@@ -293,8 +335,8 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '0px',
                                     textAlign: 'center',
-                                    height:'40px',
-                                    fontSize:'26px'
+                                    height: '40px',
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -306,7 +348,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -318,7 +360,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -330,7 +372,7 @@ const CardReserve = ({cardTimer}) => {
                                     width: '20px',
                                     marginRight: '2px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
@@ -341,33 +383,41 @@ const CardReserve = ({cardTimer}) => {
                                     borderBottom: '2px solid black',
                                     width: '20px',
                                     textAlign: 'center',
-                                    fontSize:'26px'
+                                    fontSize: '26px'
                                 }}
                                        type="text"
                                        maxLength="1"
                                        ref={input5}
-                                       value={code}
+                                       // value={code}
+
                                 />
+
                             </div>
                         </div>
                         <ButtonSend onClick={handleCodeValidation} style={{marginTop: '10px'}}>
-                            Validar
+                            <strong>Validar</strong>
                             <div>
                                 <AiOutlineArrowRight/>
                             </div>
                         </ButtonSend>
+                        <BackButton onClick={startWhatsappValidation} style={{margin: '10px 0 20px 0'}}>
+                            <div>
+                                <AiOutlineArrowLeft/>
+                            </div>
+                            <strong>Voltar</strong>
+                        </BackButton>
                         <p>{validationMessage}</p>
                     </div>
                 )}
 
                 {reservedTime && (
-                    <div>
+                    <div style={{padding:'0 10px'}}>
                         <p>Agendamento concluído com sucesso! </p>
-                        <BsCheckCircle style={{minHeight: '40px', width: '40px'}}/>
+                        <FcApproval style={{minHeight: '40px', width: '40px'}}/>
                         <div>
-                            <p>Agora é só aguardar tranquilamente.</p>
+                            <p>Agora é só aguardar.</p>
                             <p>Você receberá uma mensagem um pouco antes para te lembrar.</p>
-                            <p>Ate breve... {time}</p>
+                            <p>Até breve... {time}</p>
                         </div>
                     </div>
                 )}

@@ -38,7 +38,7 @@ const ButtonCodeValidation = () => {
             setNotReservation(false)
             setCustomerWithCompletedAppointment(false)
             setTime(8)
-            console.log('hit')
+            // console.log('hit')
         } else {
             setValidationMessage('Código inválido!');
         }
